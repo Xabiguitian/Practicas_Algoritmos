@@ -1,2 +1,108 @@
-En esta práctica se nos encarga la tarea de de evaluar tres métodos distintos para implementar la sucesión de Fibonacci. El objetivo principal es validar la implementación de los algoritmos y medir el rendimiento de cada uno de ellos en función de su complejidad teórica. Para ello, se implementan los algoritmos fib1, fib2 y fib3, cuyas complejidades son O(phi^n), O(n) y O(log n) respectivamente.
+Informe de Práctica 1: Algoritmos para el Cálculo de Fibonacci
 
+Introducción:
+
+En esta práctica se implementan tres algoritmos diferentes para calcular la sucesión de Fibonacci. El objetivo principal es conseguir el funcionamiento correcto de los algoritmos y medir el rendimiento de cada uno de ellos en función de su complejidad teórica. 
+Se implementan los algoritmos fib1, fib2 y fib3, cuyas complejidades son O(phi^n), O(n) y O(log n) respectivamente, para los cuales se comparan los tiempos de ejecución, utilizando cotas ajustadas, subestimadas y sobrestimadas.
+
+Descripción de los Algoritmos:
+
+	1.	Fib1: 
+		función fib1 (n); 
+			si n<2 entonces devolver n 
+			sino devolver fib1(n-1) + fib1(n-2) 
+			fin si 
+		fin función 
+	2.	Fib2: 
+		función fib2 (n); 
+			i := 1; j := 0; 
+			para k := 1 hasta n hacer 
+				j := i + j; i := j - i 
+			fin para; 
+			devolver j 
+		fin función
+
+	3.	Fib3: 
+		función fib3 (n);
+			i := 1; j := 0; k := 0; h := 1; t := 0
+			mientras n>0 hacer
+				si n es impar entonces
+					t := jh;
+					j := ih + jk + t;
+					i := ik + t
+				fin si;
+				t := h2;
+				h := 2kh + t;
+				k := k2 + t;
+				n := n div 2
+			fin mientras;
+			devolver j
+		fin función
+
+Medición de Tiempos:
+
+Los tiempos se han medido con la función microsegundos, y tomando la precaución de que para cada caso el código se ha ejecutado suficientes veces como para que el tiempo de ejecución acumulado sea mayor a 500 microsegundos.
+
+Máquina Utilizada:
+
+	•	Procesador: Apple M1
+	•	RAM: 8 GB
+	•	Sistema Operativo: MacOS 15.1
+
+
+Resultados (t medido en microsegundos):
+￼
+Validacion de los algoritmos:
+ n		 fib1		 fib2		 fib3
+ 0		    0		    0		    0
+ 1		    1		    1		    1
+ 2		    1		    1		    1
+ 3		    2		    2		    2
+ 4		    3		    3		    3
+ 5		    5		    5		    5
+ 6		    8		    8		    8
+ 7		   13		   13		   13
+ 8		   21		   21		   21
+ 9		   34		   34		   34
+10		   55		   55		   55
+11		   89		   89		   89
+12		  144		  144		  144
+13		  233		  233		  233
+14		  377		  377		  377
+15		  610		  610		  610
+16		  987		  987		  987
+17		 1597		 1597		 1597
+18		 2584		 2584		 2584
+19		 4181		 4181		 4181
+20		 6765		 6765		 6765
+
+
+fib1
+    	   n		       t	   t/pow(1.1,n)	  t/pow((1+sqrt(5))/2,n)	    t/pow(2, n)	    iteraciones
+           2           0.035          0.029004                  0.013405           0.008774           14247
+           4           0.065          0.044490                  0.009504           0.004071            7676
+           8           0.269          0.125473                  0.005725           0.001051            1859
+          16          10.140          2.206759                  0.004594           0.000155              50
+          32       28539.000       1351.676696                  0.005859           0.000007               1
+
+fib2
+    	   n		       t	  t/pow(n,0.8)			    		 t/n       t/(n*log(n))		iteraciones
+        1000           4.762          0.018957                  0.004762           0.000689             105
+       10000          47.818          0.030171                  0.004782           0.000519              11
+      100000         479.000          0.047900                  0.004790           0.000416               2
+     1000000        4388.000          0.069545                  0.004388           0.000318               1
+    10000000       34314.000          0.086193                  0.003431           0.000213               1
+
+fib3
+    	   n		       t	t/sqrt(log(n))					t/log(n)      t/pow(n, 0.5)		iteraciones
+        1000           0.043          0.016316                  0.006208           0.001356           11660
+       10000           0.055          0.018097                  0.005963           0.000549            9104
+      100000           0.063          0.018594                  0.005480           0.000200            7925
+     1000000           0.071          0.019214                  0.005169           0.000071            7001
+    10000000           0.085          0.021137                  0.005265           0.000027            5892
+
+
+Conclusiones:
+
+Para pequeños valores cualquiera de los tres algoritmos funciona bien, pero a medida que los números crecen se puede observar como fib1 deja de funcionar rápidamente dada su baja complejidad (phi^n), para números mucho más grandes tanto fib2 como fib3 sirven aunq fib3 es mucho más rápido. Pero ya cuando los números son mucho más grandes la complejidad de fib2 se queda escasa (n) y ya solo nos sirve la complejidad de fib3 (log n).
+En cuanto a las cotas, los tiempos obtenidos confirman que las cotas ajustadas son correctas, y las subestimadas y sobrestimadas ofrecen una buena aproximación a los tiempos reales.
