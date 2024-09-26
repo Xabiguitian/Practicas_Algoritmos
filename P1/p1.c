@@ -74,7 +74,7 @@ double microsegundos() {
 
 void medicionesFib1(){
 	double t1=0, t2=0, t, x, y, z;
-	printf("fib1\n    \t   n\t\t   t\t  t/pow(1.1,n)\t  t/pow((1+sqrt(5))/2,n)\tt/pow(2, n)\n");
+	printf("fib1\n    \t   n\t\t   t\t  t/pow(1.1,n)\t  t/pow((1+sqrt(5))/2,n)\tt/pow(2, n)\titeraciones\n");
 	for(int n=2;n<=32;n=n*2){
 		int i=0;
 		
@@ -90,7 +90,7 @@ void medicionesFib1(){
 		x = t / pow(1.1, n);
 		y = t / pow((1+sqrt(5))/2, n);
 		z = t / pow(2, n);
-		printf("%12d%16.3f%18.6f%26.6f%19.6f\n", n, t, x, y, z);
+		printf("%12d%16.3f%18.6f%26.6f%19.6f%16d\n", n, t, x, y, z, i);
 	}
 }
 
@@ -98,7 +98,7 @@ void medicionesFib1(){
 
 void medicionesFib2(){
 	double t1, t2, t, x, y, z;
-	printf("\nfib2\n    \t   n\t\t   t\t  t/pow(n,0.8)\t\t\t     t/n       t/(n*log(n))\n");
+	printf("\nfib2\n    \t   n\t\t   t\t  t/pow(n,0.8)\t\t\t     t/n       t/(n*log(n))\titeraciones\n");
 	for(int n=1000;n<=10000000;n=n*10){
 		
 		int i=0;
@@ -115,7 +115,7 @@ void medicionesFib2(){
 		x = t / pow(n, 0.8);
 		y = t / n;
 		z = t / (n*log(n));
-		printf("%12d%16.3f%18.6f%26.6f%19.6f\n", n, t, x, y, z);
+		printf("%12d%16.3f%18.6f%26.6f%19.6f%16d\n", n, t, x, y, z,i);
 	}
 }
 
@@ -123,7 +123,7 @@ void medicionesFib2(){
 void medicionesFib3(){
 	double t1, t2, t, x, y, z;
 
-	printf("\nfib3\n    \t   n\t\t   t\tt/sqrt(log(n))\t\t\tt/log(n)      t/pow(n, 0.5)\n");
+	printf("\nfib3\n    \t   n\t\t   t\tt/sqrt(log(n))\t\t\tt/log(n)      t/pow(n, 0.5)\titeraciones\n");
 	for(int n=1000;n<=10000000;n=n*10){
 		
 		int i=0;
@@ -140,7 +140,7 @@ void medicionesFib3(){
 		x = t / sqrt(log(n));
 		y = t / log(n);
 		z = t / pow(n, 0.5);
-		printf("%12d%16.3f%18.6f%26.6f%19.6f\n", n, t, x, y, z);
+		printf("%12d%16.3f%18.6f%26.6f%19.6f%16d\n", n, t, x, y, z, i);
 	}
 }
 
