@@ -1,0 +1,2 @@
+En esta práctica se nos encarga la tarea de de evaluar tres métodos distintos para implementar la sucesión de Fibonacci. El objetivo principal es validar la implementación de los algoritmos y medir el rendimiento de cada uno de ellos en función de su complejidad teórica. Para ello, se implementan los algoritmos fib1, fib2 y fib3, cuyas complejidades son O(phi^n), O(n) y O(log n) respectivamente.
+
