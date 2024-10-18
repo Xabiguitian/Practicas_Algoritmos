@@ -25,10 +25,10 @@
 //CÓDIGO DE LOS ALGORITMOS DE INSERCIÓN Y DE ORDENACIÓN RÁPIDA
 
 //FUNCIONES PROGRAMA
-void ordenaciónInsercion(char v[]){
-	int i,n,x,j;
+void ord_ins(int v[], int n){
+	int i,x,j;
 
-	for(i=2;i<n;i++){
+	for(i=1;i<n;i++){
 		x=v[i];
 		j=i-1;
 		while(j>0 && v[j]>x){
@@ -40,88 +40,84 @@ void ordenaciónInsercion(char v[]){
 	}
 }
 
-/*void ord_ins (int v [], int n) {
-	int i, j,x;
 
+void intercambiar(int a, int b) {
+	int auxiliar;
 
-	for(i=2;i<=n;i++){
-		x = v[i];
-		j = j-1;
-		while (j>0 && v[j]>x){
-			v[j+1] = v[j];
-			j=j-1;;
-		}
-		v[j+1]=x;
-	}
-}*/
+	auxiliar=a;
+	a=b;
+	b=auxiliar;
+}
 
 
 
-void ordenaciónAuxiliar(char v[]){
-	int iz=0, dr,x,i,j, pivote;
-
-	for (dr = 0; v[i]!=NULL; dr++);
+void ord_rap_aux(int v[], int iz, int dr){
+	int x,i,j, pivote;
 
 	if(iz<dr){
-		x=8;//CORREGIR
+		int m=2*dr+1;
+
+
+		x = (rand() % m) - dr;;//CORREGIR
 		pivote=v[x];
 		intercambiar(v[iz],v[x]); //mirar función intercambiar
 		i=iz+1;
 		j=dr;
 		while(i<=j){
 			while(i<=dr&&v[i]<pivote){
-				i=i+1;
+				i+=1;
 			}
 
 			while(v[j]>pivote){
-				j=j-1;
-				if(i<=j){
-					intercambiar(v[1],v[j]);
-					i=i+1;
-					j=j-1;
+				j-=1;
+				
+			}
+
+			if(i<=j){
+					intercambiar(v[i],v[j]);
+					i+=1;
+					j-=1;
 
 			}
-				}
-				intercambiar(v[iz], v[j]);
-				ordenaciónAuxiliar(v[iz,j-1]);
-				ordenaciónAuxiliar(v[j+1,dr])
+			
+			intercambiar(v[iz], v[j]);
+			ord_rap_aux(v, iz, j-1);
+			ord_rap_aux(v, j+1, dr)
 		}
 		
 
 	}
 }
 
-void ord_rap_aux (int v [], int iz, int dr) {
-/* ... */
-}
+
 void ord_rap (int v [], int n) {
-ord_rap_aux(v, 0, n-1);
+	ord_rap_aux(v, 0, n-1);
 }
 
 
 
 void inicializar_semilla() {
-srand(time(NULL));
+	srand(time(NULL));
 }
 
 void aleatorio(int v [], int n) {/* se generan números pseudoaleatorio entre -n y +n */
-int i, m=2*n+1;
-for (i=0; i < n; i++)
-v[i] = (rand() % m) - n;
+	int i, m=2*n+1;
+	for (i=0; i < n; i++)
+		v[i] = (rand() % m) - n;
 }
 
 
 
 void ascendente(int v [], int n) {
-int i;
-for (i=0; i < n; i++)
-v[i] = i;
+	int i;
+	for (i=0; i < n; i++)
+		v[i] = i;
 }
 
 void descendente(int v[], int n){
 	int i,j=0;
-	for(i=0;i<n;i--){
-		v[i-1]=j;
+	for(i=0; i < n; i++){
+		v[i] = n - i;
 
 	}
 
@@ -130,24 +126,70 @@ void descendente(int v[], int n){
 
 void printVector(int v[], int n){
 	int i;
-	printf("[");
 	for(i=0;i<n;i++){
-		printf("%2d",v[i]);
+		printf("%3d",v[i]);
 	}
-	printf("]\n");
+	printf("\n");
 }
 
+
+bool ordenado(int v[], int n){
+	int i;
+	for(i=0;i<n;i++){
+    	if(v[i]>v[i+1]){
+      		return false;
+        }
+  	}
+
+  	return true;
+}
 
 
 //FUNCIÓN VOID TEST
 
-void test(){
+void test(void (*algoritmo)(int[], int), int tamV){
+	int * desc, * asc, * aleat;
+    int aux;
 
-	printf(" n\t\t fib1\t\t fib2\t\t fib3\n");
-	for(int  n=0;n<=20;n++){
-		printf("%2d\t\t%5d\t\t%5d\t\t%5d\n",n,fib1(n),fib2(n),fib3(n));
-	}
+	//vectores vacíos
+	desc=malloc(tamV * sizeof(int));
+	asc=malloc(tamV * sizeof(int));
+	aleat=malloc(tamV * sizeof(int));
+
+
+	ascendente(asc, tamV);
+	descendente(desc,tamV);
+	aleatorio(aleat,tamV);
+
+    printf("Inicialización aleatoria.\n");
+    printVector(aleat,tamV);
+    printf("Ordenado? %d\nordenando...",ordenado(aleat,tamV));
+    algoritmo(aleat,tamV);
+    printVector(aleat,tamV);
+    printf("ordenado? %d\n",ordenado(aleat,tamV));
+
+	printf("Inicialización ascendente.\n");
+    printVector(asc,tamV);
+	printf("Ordenado? %d\nordenando...",ordenado(asc,tamV));
+    algoritmo(asc,tamV);
+	printVector(asc,tamV);
+	printf("ordenado? %d\n",ordenado(asc,tamV));
+
+	printf("Inicialización descendente.\n");
+	printVector(desc,tamV);
+	printf("Ordenado? %d\nordenando...",ordenado(desc,tamV));
+	algoritmo(desc,tamV);
+	printVector(asc,tamV);
+	printf("ordenado? %d\n",ordenado(asc,tamV));
+
+    free(desc);
+    free(asc);
+    free(aleat);
+
 }
+
+
+
 
 
 //FUNCIONES PARA LAS MEDICIONES (para cada algoritmo va haber 3 tablas en el informe)
@@ -176,9 +218,16 @@ t:=(t1-t2)/K
 
 
 int main(){
+	int tam = 10;
 
 	inicializar_semilla();
-	test();
+	printf("Ordenacion por insercion\n");
+    test(ord_ins, tam);
+    printf("\n");
+
+    printf("Ordenacion rápida\n");
+    test(ord_rap,tam);
+    printf("\n");
 	
 
 
