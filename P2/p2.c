@@ -14,85 +14,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <time.h>
 #include <math.h>
-
-
-
-
-
-//CÓDIGOS PROPORCIONADOS EN LA PRÁCTICA
-//CÓDIGO DE LOS ALGORITMOS DE INSERCIÓN Y DE ORDENACIÓN RÁPIDA
-
-//FUNCIONES PROGRAMA
-void ord_ins(int v[], int n){
-	int i,x,j;
-
-	for(i=1;i<n;i++){
-		x=v[i];
-		j=i-1;
-		while(j>0 && v[j]>x){
-			v[j+1]=v[j];
-			j=j-1;
-
-		}
-		v[j+1]=x;
-	}
-}
-
-
-void intercambiar(int a, int b) {
-	int auxiliar;
-
-	auxiliar=a;
-	a=b;
-	b=auxiliar;
-}
-
-
-
-void ord_rap_aux(int v[], int iz, int dr){
-	int x,i,j, pivote;
-
-	if(iz<dr){
-		int m=2*dr+1;
-
-
-		x = (rand() % m) - dr;;//CORREGIR
-		pivote=v[x];
-		intercambiar(v[iz],v[x]); //mirar función intercambiar
-		i=iz+1;
-		j=dr;
-		while(i<=j){
-			while(i<=dr&&v[i]<pivote){
-				i+=1;
-			}
-
-			while(v[j]>pivote){
-				j-=1;
-				
-			}
-
-			if(i<=j){
-					intercambiar(v[i],v[j]);
-					i+=1;
-					j-=1;
-
-			}
-			
-			intercambiar(v[iz], v[j]);
-			ord_rap_aux(v, iz, j-1);
-			ord_rap_aux(v, j+1, dr)
-		}
-		
-
-	}
-}
-
-
-void ord_rap (int v [], int n) {
-	ord_rap_aux(v, 0, n-1);
-}
 
 
 
@@ -106,12 +30,85 @@ void aleatorio(int v [], int n) {/* se generan números pseudoaleatorio entre -n
 		v[i] = (rand() % m) - n;
 }
 
+//CÓDIGOS PROPORCIONADOS EN LA PRÁCTICA
+//CÓDIGO DE LOS ALGORITMOS DE INSERCIÓN Y DE ORDENACIÓN RÁPIDA
+
+//FUNCIONES PROGRAMA
+void ord_ins(int v[], int n){
+	int i,x,j;
+
+	for(i=1;i<n;i++){
+		x=v[i];
+		j=i-1;
+		while(j>=0 && v[j]>x){
+			v[j+1]=v[j];
+			j--;
+
+		}
+		v[j+1]=x;
+	}
+}
+
+
+void intercambiar(int *a, int *b) {
+	int auxiliar;
+
+	auxiliar=*a;
+	*a=*b;
+	*b=auxiliar;
+}
+
+
+
+void ord_rap_aux(int v[], int iz, int dr){
+	int x,i,j, pivote;
+
+	if(iz<dr){
+		int m=2*dr+1;
+
+		inicializar_semilla();
+		x = (iz + rand() % (dr - iz +1));
+		pivote=v[x];
+		intercambiar(&v[iz],&v[x]); //mirar función intercambiar
+		i=iz+1;
+		j=dr;
+		while(i<=j){
+			while(i<=dr&&v[i]<pivote){
+				i++;
+			}
+
+			while(v[j]>pivote){
+				j--;
+				
+			}
+
+			if(i<=j){
+					intercambiar(&v[i],&v[j]);
+					i++;
+					j--;
+
+			}
+			
+		
+		}
+		intercambiar(&v[iz], &v[j]);
+		ord_rap_aux(v, iz, j-1);
+		ord_rap_aux(v, i, dr);
+		
+	}
+}
+
+
+void ord_rap (int v [], int n) {
+	ord_rap_aux(v, 0, n-1);
+}
+
 
 
 void ascendente(int v [], int n) {
 	int i;
 	for (i=0; i < n; i++)
-		v[i] = i;
+		v[i] = i+1;
 }
 
 void descendente(int v[], int n){
@@ -127,7 +124,7 @@ void descendente(int v[], int n){
 void printVector(int v[], int n){
 	int i;
 	for(i=0;i<n;i++){
-		printf("%3d",v[i]);
+		printf("%4d",v[i]);
 	}
 	printf("\n");
 }
@@ -135,7 +132,7 @@ void printVector(int v[], int n){
 
 bool ordenado(int v[], int n){
 	int i;
-	for(i=0;i<n;i++){
+	for(i=0;i<n-1;i++){
     	if(v[i]>v[i+1]){
       		return false;
         }
@@ -161,21 +158,21 @@ void test(void (*algoritmo)(int[], int), int tamV){
 	descendente(desc,tamV);
 	aleatorio(aleat,tamV);
 
-    printf("Inicialización aleatoria.\n");
+    printf("\nInicialización aleatoria.\n");
     printVector(aleat,tamV);
     printf("Ordenado? %d\nordenando...",ordenado(aleat,tamV));
     algoritmo(aleat,tamV);
     printVector(aleat,tamV);
     printf("ordenado? %d\n",ordenado(aleat,tamV));
 
-	printf("Inicialización ascendente.\n");
+	printf("\nInicialización ascendente.\n");
     printVector(asc,tamV);
 	printf("Ordenado? %d\nordenando...",ordenado(asc,tamV));
     algoritmo(asc,tamV);
 	printVector(asc,tamV);
 	printf("ordenado? %d\n",ordenado(asc,tamV));
 
-	printf("Inicialización descendente.\n");
+	printf("\nInicialización descendente.\n");
 	printVector(desc,tamV);
 	printf("Ordenado? %d\nordenando...",ordenado(desc,tamV));
 	algoritmo(desc,tamV);
