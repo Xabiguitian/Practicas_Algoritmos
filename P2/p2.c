@@ -207,6 +207,48 @@ t2:=tb-ta;
 t:=(t1-t2)/K
 }*/
 
+void printTablasTiempos(){
+	int i;
+	float j=247.03, k=0.003425;
+	printf("\n\t   n\t\tascendente\t\tdescendente\t\tdesordenado\n(*)");
+	printf("%9d%22.2f%25.6f%24.6f\n", 500,j,k,k);
+	for (i = 1000; i <= 32000; i=i*2)
+	{
+		printf("%12d%22.2f%25.6f%24.6f\n", i,j,k,k);
+	}
+}
+
+
+void printTablasComplejidad(){
+	int i;
+	float j=247.03, k=0.003425;
+
+	printf("\n\nOrdenación por inserción con inicialización ascendente\n");
+	printf("\t   n\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
+	printf("%9d%16.2f%22.6f%22.6f%26.6f\n", 500,j,k,k,k);
+
+	for (i = 1000; i <= 32000; i=i*2)
+	{
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,j,k,k,k);
+	}
+
+	printf("\n\nOrdenación por inserción con inicialización descendente\n");
+	printf("\t   n\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
+	printf("%9d%16.2f%22.6f%22.6f%26.6f\n", 500,j,k,k,k);
+	for (i = 1000; i <= 32000; i=i*2)
+	{
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,j,k,k,k);
+	}
+
+	printf("\n\nOrdenación por inserción con inicialización desordenada\n");
+	printf("\t   n\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
+	printf("%9d%16.2f%22.6f%22.6f%26.6f\n", 500,j,k,k,k);
+	for (i = 1000; i <= 32000; i=i*2)
+	{
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,j,k,k,k);
+	}
+}
+
 
 
 
@@ -223,7 +265,8 @@ int main(){
     printf("Ordenacion rápida\n");
     test(ord_rap,tam);
     printf("\n");
-	
 
+	printTablasTiempos();
+    printTablasComplejidad();
 
 }
