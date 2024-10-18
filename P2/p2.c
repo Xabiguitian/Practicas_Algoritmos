@@ -64,7 +64,6 @@ void ord_rap_aux(int v[], int iz, int dr){
 	int x,i,j, pivote;
 
 	if(iz<dr){
-		int m=2*dr+1;
 
 		inicializar_semilla();
 		x = (iz + rand() % (dr - iz +1));
@@ -112,7 +111,7 @@ void ascendente(int v [], int n) {
 }
 
 void descendente(int v[], int n){
-	int i,j=0;
+	int i;
 	for(i=0; i < n; i++){
 		v[i] = n - i;
 
@@ -146,7 +145,6 @@ bool ordenado(int v[], int n){
 
 void test(void (*algoritmo)(int[], int), int tamV){
 	int * desc, * asc, * aleat;
-    int aux;
 
 	//vectores vacíos
 	desc=malloc(tamV * sizeof(int));
