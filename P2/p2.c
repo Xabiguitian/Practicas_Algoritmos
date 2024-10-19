@@ -1,4 +1,5 @@
 
+
 //P2
 //para cada algoritmo va haber 3 tablas en el informe
 //proporcionan lass funciones de semilla, aleatorio y ascendente, desas funciones hay que hacer la FUNCIÓN SEMILLA
@@ -16,13 +17,39 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <sys/time.h>
 #include <math.h>
+
+
+#define K 10000
+#define UMBRAL 1
+
+typedef enum{
+	CONST, SOBR, SUBS
+
+}cota;
+
+typedef struct tCota{
+	double resultado;
+	char *string;
+
+}tCota;
 
 
 
 void inicializar_semilla() {
 	srand(time(NULL));
 }
+
+
+//conseguimos la hora actual del sistema en microsegundos--
+double microsegundos() {
+struct timeval t;
+if (gettimeofday(&t, NULL) < 0 )
+return 0.0;
+return (t.tv_usec + t.tv_sec * 1000000.0);
+}
+
 
 void aleatorio(int v [], int n) {/* se generan números pseudoaleatorio entre -n y +n */
 	int i, m=2*n+1;
@@ -189,6 +216,11 @@ void test(void (*algoritmo)(int[], int), int tamV){
 
 //FUNCIONES PARA LAS MEDICIONES (para cada algoritmo va haber 3 tablas en el informe)
 
+
+//FUNCIONES DE MEDIR EL TIEMPO
+
+//FUNCIONES PARA IMPRIMIR LAS TABLAS DE TIEMPOS
+
 /*inicializar(vector);
 leer_tiempo (ta); alg(vector); leer_tiempo (tb);
 t:=tb-ta;
@@ -207,6 +239,182 @@ t2:=tb-ta;
 t:=(t1-t2)/K
 }*/
 
+
+
+void tiempo(void (*algoritmo)(int[], int), void (*vec)(int [], int tam), int tam){
+
+	double t1, t=0,t2,aux;
+	int *v;
+	int i;
+
+
+	v= malloc(tam *sizeof(int));
+	vec(v, tam);
+
+	t1=microsegundos();
+	algoritmo(v,tam);
+	t2=microsegundos;
+	t=t2-t1;
+	if(t<500){
+		t1=microsegundos();
+		for(i=0;i<K;i++){
+			vec(v,tam);
+			algoritmo(v,tam);
+		}
+		t2=microsegundos();
+		aux=t2-t1;
+		t1=microsegundos();
+		for(i=0;i<K;i++){
+			vec(v,tam);
+		}
+		t2=microsegundos();
+		t=t2-t1;
+		t=(aux-t)/K;
+	}
+
+
+free (v);
+return t;
+}
+
+
+int AscDescAleat(int v[], int n){
+int i;
+for(i=0; i<n;i++){
+
+	if(v[i] == i+1){ //es ascendente
+		return 1;
+	}else if(v[i] == n - i){ //es descendente
+		return 2;
+	}else{ //es aleatoria
+		return 3;
+	}
+}
+
+}
+
+cota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
+	int v[];
+	cota c;
+	c.resultado=0;
+
+	if(AscDescAleat(v[],n)==1){
+
+		if(tipo==SUBS){
+			c.resultado= pow (n,0.8);
+			c.string= (UMBRAL==1)? "____[t(n)/n^0.8]____" : "[t(n)/n^2.2]____";
+
+
+
+		}else if(tipo=CONST){
+			c.resultado= (UMBRAL==1)? pow(n,0.95)*log2(n) : (UMBRAL==10)? pow(n,0.99)*log2(n) : pow(n,1.06)*log2(n);
+			c.string= (UMBRAL==1)? "[t(n)/n^0.95 * log2 n]____" : (UMBRAL==10)? "[t(n)/n^0.99 * log2 n]____" : "[t(n)/n^2.2 * log2 n]____";
+			
+
+		}else if(tipo=SOBR){
+			c.resultado= (UMBRAL==1 || UMBRAL ==10) ? pow(n,1.2) :pow(n,1.3);
+			c.string= (UMBRAL==1 || UMBRAL ==10) ? "[t(n)/n^1.2]____" : "[t(n)/n^1.3]____";
+			
+		}
+
+
+
+	}else if(AscDescAleat(v[],n)==2){
+
+		if(tipo==SUBS){
+			c.resultado=n ;
+			c.string= "____[t(n)/n]____";
+
+		}else if(tipo=CONST){
+			c.resultado= (UMBRAL==1) ? pow(n,1.06) : pow(n,1.1);
+			c.string= (UMBRAL==1) ? "[t(n)/n^1.06____]" : "[t(n)/n^1.1]____";;
+
+		}else if(tipo=SOBR){
+			c.resultado=pow(n,1.3) ;
+			c.string= "[t(n)/n^1.3]____";
+		}
+
+
+
+	}else{
+
+		if(tipo==SUBS){
+			c.resultado=n ;
+			c.string="____[t(n)/n]____]" ;
+
+		}else if(tipo=CONST){
+			c.resultado=(UMBRAL==1) ? pow(n, 1.01) : (UMBRAL==10) ? pow(n,1.14): pow(n,1.1);
+			c.string=(UMBRAL==1)? "[t(n)/n^1.01]____" :(UMBRAL==10)? "[t(n)/n^1.14]____" : "[t(n)/n^1.1]____";
+
+		}else if(tipo=SOBR){
+			c.resultado= pow(n,1.4);
+			c.string="[t(n)/n^1.4]____" ;
+		}
+
+
+
+	}
+
+}
+
+cota CalcularCotaInser(int n, enum cota tipo ,int AscDescAleat ){
+	int v[];
+
+	if(AscDescAleat(v[],n)==1){
+		if(tipo==SUBS){
+			c.resultado=pow(n,0.8) ;
+			c.string="____[t(n)/n^0.8]____" ;
+
+		}else if(tipo=CONST){
+			c.resultado= n;
+			c.string= "[t(n)/n]____";
+
+		}else if(tipo=SOBR){
+			c.resultado=pow(n,1.2) ;
+			c.string= "[t(n)/n^1.2]____";
+
+		}
+
+
+	}else if(AscDescAleat(v[],n)==2){
+
+		if(tipo==SUBS){
+			c.resultado=pow(n,1.8) ;
+			c.string="____[t(n)/n^1.8]____" ;
+
+		}else if(tipo=CONST){
+			c.resultado= n*n;
+			c.string="[t(n)/n^2]____" ;
+
+		}else if(tipo=SOBR){
+			c.resultado=pow(n,2.2) ;
+			c.string="[t(n)/n^2.2]____" ;
+		}
+
+	}else{
+
+		if(tipo==SUBS){
+			c.resultado=pow(n,1.8);
+			c.string="___[t(n)/n^1.8]___";
+
+		}else if(tipo=CONST){
+			c.resultado= n*n ;
+			c.string= "[t(n)/n^2____";
+
+		}else if(tipo=SOBR){
+			c.resultado= pow(n,2.2);
+			c.string= "t(n)/n^2.2____";
+			
+			
+		}
+
+		
+
+	}
+	return c;
+
+
+}
 void printTablasTiempos(){
 	int i;
 	float j=247.03, k=0.003425;
@@ -257,6 +465,8 @@ void printTablasComplejidad(){
 int main(){
 	int tam = 10;
 
+
+    //Ejecución del test
 	inicializar_semilla();
 	printf("Ordenacion por insercion\n");
     test(ord_ins, tam);
@@ -266,7 +476,12 @@ int main(){
     test(ord_rap,tam);
     printf("\n");
 
-	printTablasTiempos();
+    //Ejecucion  de los tiempos
+    printTablasTiempos();
     printTablasComplejidad();
+
+
+	
+
 
 }
