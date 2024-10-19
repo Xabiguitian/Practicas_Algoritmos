@@ -23,7 +23,7 @@
 #define K 10000
 #define UMBRAL 1
 
-typedef enum{
+typedef enum cota{
 	CONST, SOBR, SUBS
 
 }cota;
@@ -293,8 +293,8 @@ for(i=0; i<n;i++){
 
 
 
-cota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
-	cota c;
+tCota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
+	tCota c;
 	c.resultado=0;
 
 	if(AscDescAleat == 1){
@@ -355,11 +355,12 @@ cota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
 
 
 	}
+	return c;
 
 }
 
-cota CalcularCotaInser(int n, enum cota tipo ,int AscDescAleat ){
-	cota c;
+tCota CalcularCotaInser(int n, enum cota tipo ,int AscDescAleat ){
+	tCota c;
 	c.resultado=0;
 
 	if(AscDescAleat == 1){
