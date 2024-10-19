@@ -1,5 +1,4 @@
 
-
 //P2
 //para cada algoritmo va haber 3 tablas en el informe
 //proporcionan lass funciones de semilla, aleatorio y ascendente, desas funciones hay que hacer la FUNCIÓN SEMILLA
@@ -241,7 +240,7 @@ t:=(t1-t2)/K
 
 
 
-void tiempo(void (*algoritmo)(int[], int), void (*vec)(int [], int tam), int tam){
+double tiempo(void (*algoritmo)(int[], int), void (*vec)(int [], int tam), int tam){
 
 	double t1, t=0,t2,aux;
 	int *v;
@@ -253,7 +252,7 @@ void tiempo(void (*algoritmo)(int[], int), void (*vec)(int [], int tam), int tam
 
 	t1=microsegundos();
 	algoritmo(v,tam);
-	t2=microsegundos;
+	t2=microsegundos();
 	t=t2-t1;
 	if(t<500){
 		t1=microsegundos();
@@ -275,6 +274,7 @@ void tiempo(void (*algoritmo)(int[], int), void (*vec)(int [], int tam), int tam
 
 free (v);
 return t;
+
 }
 
 
@@ -286,19 +286,18 @@ for(i=0; i<n;i++){
 		return 1;
 	}else if(v[i] == n - i){ //es descendente
 		return 2;
-	}else{ //es aleatoria
-		return 3;
 	}
+	}
+	return 3;
 }
 
-}
+
 
 cota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
-	int v[];
 	cota c;
 	c.resultado=0;
 
-	if(AscDescAleat(v[],n)==1){
+	if(AscDescAleat == 1){
 
 		if(tipo==SUBS){
 			c.resultado= pow (n,0.8);
@@ -307,8 +306,10 @@ cota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
 
 
 		}else if(tipo=CONST){
-			c.resultado= (UMBRAL==1)? pow(n,0.95)*log2(n) : (UMBRAL==10)? pow(n,0.99)*log2(n) : pow(n,1.06)*log2(n);
-			c.string= (UMBRAL==1)? "[t(n)/n^0.95 * log2 n]____" : (UMBRAL==10)? "[t(n)/n^0.99 * log2 n]____" : "[t(n)/n^2.2 * log2 n]____";
+			c.resultado= (UMBRAL==1)? pow(n,0.95)*log2(n) :
+			 (UMBRAL==10)? pow(n,0.99)*log2(n) : pow(n,1.06)*log2(n);
+			c.string= (UMBRAL==1)? "[t(n)/n^0.95 * log2 n]____" : 
+			(UMBRAL==10)? "[t(n)/n^0.99 * log2 n]____" : "[t(n)/n^2.2 * log2 n]____";
 			
 
 		}else if(tipo=SOBR){
@@ -319,7 +320,7 @@ cota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
 
 
 
-	}else if(AscDescAleat(v[],n)==2){
+	}else if(AscDescAleat == 2){
 
 		if(tipo==SUBS){
 			c.resultado=n ;
@@ -358,9 +359,10 @@ cota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
 }
 
 cota CalcularCotaInser(int n, enum cota tipo ,int AscDescAleat ){
-	int v[];
+	cota c;
+	c.resultado=0;
 
-	if(AscDescAleat(v[],n)==1){
+	if(AscDescAleat == 1){
 		if(tipo==SUBS){
 			c.resultado=pow(n,0.8) ;
 			c.string="____[t(n)/n^0.8]____" ;
@@ -376,7 +378,7 @@ cota CalcularCotaInser(int n, enum cota tipo ,int AscDescAleat ){
 		}
 
 
-	}else if(AscDescAleat(v[],n)==2){
+	}else if(AscDescAleat == 2){
 
 		if(tipo==SUBS){
 			c.resultado=pow(n,1.8) ;
