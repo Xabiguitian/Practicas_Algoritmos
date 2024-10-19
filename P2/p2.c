@@ -52,10 +52,7 @@ void aleatorio(int v [], int n) {/* se generan números pseudoaleatorio entre -n
 		v[i] = (rand() % m) - n;
 }
 
-//CÓDIGOS PROPORCIONADOS EN LA PRÁCTICA
-//CÓDIGO DE LOS ALGORITMOS DE INSERCIÓN Y DE ORDENACIÓN RÁPIDA
 
-//FUNCIONES PROGRAMA
 void ord_ins(int v[], int n){
 	int i,x,j;
 
@@ -207,153 +204,124 @@ void test(void (*algoritmo)(int[], int), int tamV){
 
 
 
+   
 
 
-//FUNCIONES PARA LAS MEDICIONES (para cada algoritmo va haber 3 tablas en el informe)
 
-/*inicializar(vector);
-leer_tiempo (ta); alg(vector); leer_tiempo (tb);
-t:=tb-ta;
-si (t < 500) entonces { % ‘‘umbral de confianza’’
-leer_tiempo (ta);
-repetir K veces: {
-inicializar(vector); alg(vector)
-};
-leer_tiempo (tb);
-t1:=tb-ta; % deber´ıa estar por encima de 500!
-leer_tiempo (ta);
-repetir K veces: % debe ser la misma constante K
-inicializar(vector);
-leer_tiempo (tb);
-t2:=tb-ta;
-t:=(t1-t2)/K
-}*/
+double tiempo(void (*algoritmo)(int[], int), void (*vec) (int [],int), int tam){
 
-double tiempo(void (*algoritmo)(int[], int), int vector [], int tam){
+	double t1, t,t2,aux;
+	int *v;
+	int i;
 
-    double t1, t=0,t2,aux;
-    int i;
 
-    t1=microsegundos();
-    algoritmo(vector,tam);
-    t2=microsegundos();
-    t=t2-t1;
-    if(t<500){
-        t1=microsegundos();
-        for(i=0;i<K;i++){
-            algoritmo(vector,tam);
-        }
-        t2=microsegundos();
-        t=t2-t1;
-        t=t/K;
-    }
+	v= malloc(tam *sizeof(int));
+	vec(v, tam);
 
+	t1=microsegundos();
+	algoritmo(v,tam);
+	t2=microsegundos();
+	t=t2-t1;
+	if(t<500){
+		t1=microsegundos();
+		for(i=0;i<K;i++){
+			vec(v,tam);
+			algoritmo(v,tam);
+		}
+		t2=microsegundos();
+		aux=t2-t1;
+		t1=microsegundos();
+		for(i=0;i<K;i++){
+			vec(v,tam);
+		}
+		t2=microsegundos();
+		t=t2-t1;
+		t=(aux-t)/K;
+	}
+
+
+free (v);
 return t;
 
 }
 
 
-void printTablasTiemposInsercion(){
-	int * desc, * asc, * aleat;
-
-	desc=malloc(500 * sizeof(int));
-	asc=malloc(500 * sizeof(int));
-	aleat=malloc(500 * sizeof(int));
-	descendente(desc, 500);
-	ascendente(asc, 500);
-	aleatorio(aleat, 500);
-
-
-	int i;
-	printf("\nTest ordenación por inserción");
-	printf("\n\t   n\t\tascendente\t\tdescendente\t\tdesordenado\n(*)");
-	printf("%9d%22.2f%25.6f%24.6f\n", 500,tiempo(ord_ins,asc,500),tiempo(ord_ins,desc,500),tiempo(ord_ins,aleat,500));
-	for (i = 1000; i <= 32000; i=i*2)
-	{
-		desc=malloc(i * sizeof(int));
-		asc=malloc(i * sizeof(int));
-		aleat=malloc(i * sizeof(int));
-		descendente(desc, i);
-		ascendente(asc, i);
-		aleatorio(aleat, i);
-
-		printf("%12d%22.2f%25.6f%24.6f\n", i,tiempo(ord_ins,asc,i),tiempo(ord_ins,desc,i),tiempo(ord_ins,aleat,i));
-	}
-}
-
-void printTablasTiemposOrdRap(){
-	int * desc, * asc, * aleat;
-
-	desc=malloc(500 * sizeof(int));
-	asc=malloc(500 * sizeof(int));
-	aleat=malloc(500 * sizeof(int));
-	descendente(desc, 500);
-	ascendente(asc, 500);
-	aleatorio(aleat, 500);
-
-
-	int i;
-	printf("\nTest ordenación rápida");
-	printf("\n\t   n\t\tascendente\t\tdescendente\t\tdesordenado\n(*)");
-	printf("%9d%22.2f%25.6f%24.6f\n", 500,tiempo(ord_rap,asc,500),tiempo(ord_rap,desc,500),tiempo(ord_rap,aleat,500));
-	for (i = 1000; i <= 32000; i=i*2)
-	{
-		desc=malloc(i * sizeof(int));
-		asc=malloc(i * sizeof(int));
-		aleat=malloc(i * sizeof(int));
-		descendente(desc, i);
-		ascendente(asc, i);
-		aleatorio(aleat, i);
-
-		printf("%12d%22.2f%25.6f%24.6f\n", i,tiempo(ord_rap,asc,i),tiempo(ord_rap,desc,i),tiempo(ord_rap,aleat,i));
-	}
-}
-
-
 void printTablasComplejidadIns(){
 	int * desc, * asc, * aleat, i;
-	double k=0 , j=0;
+	
 
-	desc=malloc(500 * sizeof(int));
-	asc=malloc(500 * sizeof(int));
-	aleat=malloc(500 * sizeof(int));
-	descendente(desc, 500);
-	ascendente(asc, 500);
-	aleatorio(aleat, 500);
 
 	printf("\n\nOrdenación por inserción con inicialización ascendente\n");
-	printf("\t   n\t\tt(n)\t\tt(n)/n^0.8\t\tt(n)/n\t\tt(n)/n^1.2\n(*)");
-	printf("%9d%16.2f%22.6f%22.6f%26.6f\n", 500,tiempo(ord_ins,asc,500),tiempo(ord_ins,asc,500)/pow(500,0.8),tiempo(ord_ins,asc,500)/500,tiempo(ord_ins,asc,500)/pow(500,1.2));
-
-	for (i = 1000; i <= 32000; i=i*2)
+	printf("\tn\t\tt(n)\t\tt(n)/n^0.8\t\tt(n)/n\t\tt(n)/n^1.2\n(*)");
+	
+	for (i = 500; i <= 32000; i=i*2)
 	{
-		free(asc);
+		
 		asc=malloc(i * sizeof(int));
 		ascendente(asc, i);
 
-		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_ins,asc,i),tiempo(ord_ins,asc,i)/pow(i,0.8),tiempo(ord_ins,asc,i)/i,tiempo(ord_ins,asc,i)/pow(i,1.2));
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_ins,ascendente,i),
+			tiempo(ord_ins,ascendente,i)/pow(i,0.8),tiempo(ord_ins,ascendente,i)/i,tiempo(ord_ins,ascendente,i)/pow(i,1.2));
 	}
 
-	printf("\n\nOrdenación por inserción con inicialización descendente\n");
-	printf("\t   n\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
-	printf("%9d%16.2f%22.6f%22.6f%26.6f\n", 500,j,tiempo(ord_ins,desc,500),tiempo(ord_ins,desc,500)/pow(500,1.8),tiempo(ord_ins,desc,500)/pow(500,2),tiempo(ord_ins,desc,500)/pow(500,2.2));
-	for (i = 1000; i <= 32000; i=i*2)
+	printf("\n \nOrdenación por inserción con inicialización descendente\n");
+	printf("\tn\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
+	for (i = 500; i <= 32000; i=i*2)
 	{
-		free(desc);
+		
 		desc=malloc(i * sizeof(int));
-		ascendente(desc, i);
-		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_ins,desc,i),tiempo(ord_ins,desc,i)/pow(i,1.8),tiempo(ord_ins,desc,i)/pow(i,2),tiempo(ord_ins,desc,i)/pow(i,2.2));
+		descendente(desc, i);
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_ins,descendente,i),tiempo(ord_ins,descendente,i)/pow(i,1.8),tiempo(ord_ins,descendente,i)/pow(i,2),tiempo(ord_ins,descendente,i)/pow(i,2.2));
 	}
 
 	printf("\n\nOrdenación por inserción con inicialización desordenada\n");
-	printf("\t   n\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
-	printf("%9d%16.2f%22.6f%22.6f%26.6f\n", 500,j,tiempo(ord_ins,aleat,500),tiempo(ord_ins,aleat,500)/pow(500,1.8),tiempo(ord_ins,aleat,500)/pow(500,2),tiempo(ord_ins,aleat,500)/pow(500,2.2));
-	for (i = 1000; i <= 32000; i=i*2)
+	printf("\n\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
+	for (i = 500; i <= 32000; i=i*2)
 	{
-		free(aleat);
+		
 		aleat=malloc(i * sizeof(int));
-		ascendente(aleat, i);
-		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_ins,aleat,i),tiempo(ord_ins,aleat,i)/pow(i,1.8),tiempo(ord_ins,aleat,i)/pow(i,2),tiempo(ord_ins,aleat,i)/pow(i,2.2));
+		aleatorio(aleat, i);
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_ins,aleatorio,i),tiempo(ord_ins,aleatorio,i)/pow(i,1.8),tiempo(ord_ins,aleatorio,i)/pow(i,2),tiempo(ord_ins,aleatorio,i)/pow(i,2.2));
+	}
+}
+
+void printTablasComplejidadRap(){
+	int * desc, * asc, * aleat, i;
+	
+
+
+	printf("\n\nnOrdenación Rápida con inicialización ascendente\n");
+	printf("\tn\t\tt(n)\t\tt(n)/n^0.8\t\tt(n)/n\t\tt(n)/n^1.2\n(*)");
+	for (i = 500; i <= 32000; i=i*2)
+	{
+		
+		asc=malloc(i * sizeof(int));
+		ascendente(asc, i);
+
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_rap,ascendente,i),tiempo(ord_rap,ascendente,i)/pow(i,0.8),
+			tiempo(ord_rap,ascendente,i)/(pow(i,0.95)*log2(i)),tiempo(ord_rap,ascendente,i)/pow(i,1.2));
+	}
+
+	printf("\n\nOrdenación Rápida con inicialización descendente\n");
+	printf("\tn\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
+	for (i = 500; i <= 32000; i=i*2)
+	{
+		
+		desc=malloc(i * sizeof(int));
+		descendente(desc, i);
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_rap,descendente,i),tiempo(ord_rap,descendente,i)/i,
+			tiempo(ord_rap,descendente,i)/pow(i,1.06),tiempo(ord_rap,descendente,i)/pow(i,1.3));
+	}
+
+	printf("\n\nOrdenación Rápida con inicialización desordenada\n");
+	printf("\tn\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
+	for (i = 500; i <= 32000; i=i*2)
+	{
+		
+		aleat=malloc(i * sizeof(int));
+		aleatorio(aleat, i);
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_rap,aleatorio,i),tiempo(ord_rap,aleatorio,i)/i,
+			tiempo(ord_rap,aleatorio,i)/pow(i,1.1),tiempo(ord_rap,aleatorio,i)/pow(i,1.4));
 	}
 }
 
@@ -374,8 +342,7 @@ int main(){
     test(ord_rap,tam);
     printf("\n");
 
-	printTablasTiemposInsercion();
-	//printTablasTiemposOrdRap();
     printTablasComplejidadIns();
+    printTablasComplejidadRap();
 
 }
