@@ -305,14 +305,14 @@ tCota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
 
 
 
-		}else if(tipo=CONST){
+		}else if(tipo==CONST){
 			c.resultado= (UMBRAL==1)? pow(n,0.95)*log2(n) :
 			 (UMBRAL==10)? pow(n,0.99)*log2(n) : pow(n,1.06)*log2(n);
 			c.string= (UMBRAL==1)? "[t(n)/n^0.95 * log2 n]____" : 
 			(UMBRAL==10)? "[t(n)/n^0.99 * log2 n]____" : "[t(n)/n^2.2 * log2 n]____";
 			
 
-		}else if(tipo=SOBR){
+		}else if(tipo==SOBR){
 			c.resultado= (UMBRAL==1 || UMBRAL ==10) ? pow(n,1.2) :pow(n,1.3);
 			c.string= (UMBRAL==1 || UMBRAL ==10) ? "[t(n)/n^1.2]____" : "[t(n)/n^1.3]____";
 			
@@ -326,11 +326,11 @@ tCota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
 			c.resultado=n ;
 			c.string= "____[t(n)/n]____";
 
-		}else if(tipo=CONST){
+		}else if(tipo==CONST){
 			c.resultado= (UMBRAL==1) ? pow(n,1.06) : pow(n,1.1);
 			c.string= (UMBRAL==1) ? "[t(n)/n^1.06____]" : "[t(n)/n^1.1]____";;
 
-		}else if(tipo=SOBR){
+		}else if(tipo==SOBR){
 			c.resultado=pow(n,1.3) ;
 			c.string= "[t(n)/n^1.3]____";
 		}
@@ -343,11 +343,11 @@ tCota CalcularCotaRap(int n , enum cota tipo,int AscDescAleat){
 			c.resultado=n ;
 			c.string="____[t(n)/n]____]" ;
 
-		}else if(tipo=CONST){
+		}else if(tipo==CONST){
 			c.resultado=(UMBRAL==1) ? pow(n, 1.01) : (UMBRAL==10) ? pow(n,1.14): pow(n,1.1);
 			c.string=(UMBRAL==1)? "[t(n)/n^1.01]____" :(UMBRAL==10)? "[t(n)/n^1.14]____" : "[t(n)/n^1.1]____";
 
-		}else if(tipo=SOBR){
+		}else if(tipo==SOBR){
 			c.resultado= pow(n,1.4);
 			c.string="[t(n)/n^1.4]____" ;
 		}
@@ -368,11 +368,11 @@ tCota CalcularCotaInser(int n, enum cota tipo ,int AscDescAleat ){
 			c.resultado=pow(n,0.8) ;
 			c.string="____[t(n)/n^0.8]____" ;
 
-		}else if(tipo=CONST){
+		}else if(tipo==CONST){
 			c.resultado= n;
 			c.string= "[t(n)/n]____";
 
-		}else if(tipo=SOBR){
+		}else if(tipo==SOBR){
 			c.resultado=pow(n,1.2) ;
 			c.string= "[t(n)/n^1.2]____";
 
@@ -385,11 +385,11 @@ tCota CalcularCotaInser(int n, enum cota tipo ,int AscDescAleat ){
 			c.resultado=pow(n,1.8) ;
 			c.string="____[t(n)/n^1.8]____" ;
 
-		}else if(tipo=CONST){
+		}else if(tipo==CONST){
 			c.resultado= n*n;
 			c.string="[t(n)/n^2]____" ;
 
-		}else if(tipo=SOBR){
+		}else if(tipo==SOBR){
 			c.resultado=pow(n,2.2) ;
 			c.string="[t(n)/n^2.2]____" ;
 		}
@@ -400,11 +400,11 @@ tCota CalcularCotaInser(int n, enum cota tipo ,int AscDescAleat ){
 			c.resultado=pow(n,1.8);
 			c.string="___[t(n)/n^1.8]___";
 
-		}else if(tipo=CONST){
+		}else if(tipo==CONST){
 			c.resultado= n*n ;
 			c.string= "[t(n)/n^2____";
 
-		}else if(tipo=SOBR){
+		}else if(tipo==SOBR){
 			c.resultado= pow(n,2.2);
 			c.string= "t(n)/n^2.2____";
 			
