@@ -20,7 +20,7 @@
 #include <math.h>
 
 
-#define K 100000
+#define K 1000
 #define UMBRAL 1
 
 typedef enum cota{
@@ -275,7 +275,7 @@ void printTablasComplejidadIns(){
 	}
 
 	printf("\n\nOrdenación por inserción con inicialización desordenada\n");
-	printf("\n\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
+	printf("\nn\t\tt(n)\t\tt(n)/n^1.8\t\tt(n)/n^2\t\tt(n)/n^2.2\n(*)");
 	for (i = 500; i <= 32000; i=i*2)
 	{
 		
