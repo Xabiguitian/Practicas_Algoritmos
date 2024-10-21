@@ -6,6 +6,7 @@
 #define MIN(X,Y) ((X) < (Y) ? (X) : (Y))
 #define LONGITUD_CLAVE 30
 #define LONGITUD_SINONIMOS 300
+#define TAMV 38197
 
 
 typedef struct entrada_ {
@@ -28,14 +29,17 @@ tabla_cerrada d = malloc (38197 * sizeof(entrada));
 
 void inicializar_cerrada(tabla_cerrada *diccionario, int tam)
 {
-
+	int i;
+	for (i=0; i < tam; i++){
+		diccionario.ocupada= false;
+	}
 }
 
 pos buscar_cerrada(char *clave, tabla_cerrada diccionario, int tam,
 					int *colisiones, unsigned int (*dispersion)(char *, int),
 					unsigned int (*resol_colisiones)(int pos_ini, int num_intento))
 {
-
+	
 }
 
 int insertar_cerrada(char *clave, char *sinonimos,
