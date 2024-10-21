@@ -28,20 +28,12 @@ tabla_cerrada d = malloc (38197 * sizeof(entrada));
 
 void inicializar_cerrada(tabla_cerrada *diccionario, int tam);
 pos buscar_cerrada(char *clave, tabla_cerrada diccionario, int tam,
-int *colisiones, unsigned int (*dispersion)(char *, int),
-unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
+					int *colisiones, unsigned int (*dispersion)(char *, int),
+					unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
 int insertar_cerrada(char *clave, char *sinonimos,
-tabla_cerrada *diccionario, int tam,
-unsigned int (*dispersion)(char *, int),
-unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
-void mostrar_cerrada(tabla_cerrada diccionario, int tam);void inicializar_cerrada(tabla_cerrada *diccionario, int tam);
-pos buscar_cerrada(char *clave, tabla_cerrada diccionario, int tam,
-int *colisiones, unsigned int (*dispersion)(char *, int),
-unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
-int insertar_cerrada(char *clave, char *sinonimos,
-tabla_cerrada *diccionario, int tam,
-unsigned int (*dispersion)(char *, int),
-unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
+					tabla_cerrada *diccionario, int tam,
+					unsigned int (*dispersion)(char *, int),
+					unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
 void mostrar_cerrada(tabla_cerrada diccionario, int tam);
 
 
@@ -69,8 +61,8 @@ int leer_sinonimos(item datos[]) {
 			return(EXIT_FAILURE);
 		}
 		for (j = 0; (c = fgetc(archivo)) != ’\n’; j++) {
-		if (j < LONGITUD_SINONIMOS - 1)
-		datos[i].sinonimos[j] = c;
+			if (j < LONGITUD_SINONIMOS - 1)
+			datos[i].sinonimos[j] = c;
 		}
 		datos[i].sinonimos[MIN(j, LONGITUD_SINONIMOS -1)] = ’\0’;
 	}
