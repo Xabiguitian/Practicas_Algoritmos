@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <sys/time.h>
+#include <time.h>
 
 //DEFINICIÓN DE CONSTANTES
 #define MIN(X,Y) ((X) < (Y) ? (X) : (Y))
@@ -50,6 +52,17 @@ unsigned int dispersionB(char *clave, int tamTabla) {
 	return valor % tamTabla; /* multipicar por 32 */
 }
 
+//FUNCIÓN MICROSEGUNDOS
+double microsegundos() {
+	struct timeval t;
+	if (gettimeofday(&t, NULL) < 0 )
+		return 0.0;
+	return (t.tv_usec + t.tv_sec * 1000000.0);
+}
+
+void inicializar_semilla () {
+	srand(time(NULL));
+}
 
 
 //FUNCIONES DISPERSIÓN CERRADA
@@ -141,11 +154,7 @@ unsigned int dispersion(char *clave, int tamTabla) {
 
 
 
-//TABLA DE DISPERSIÓN CERRADA CON EXPLORACIÓN LINEAL
 
-
-//TABLA DE DISPERSIÓN CERRADA CON EXPLORACIÓN CUADRÁTICA
-//TABLA DE DISPERSIÓN CERRADA CON EXPLORACIÓN DOBLE
 
 
 int leer_sinonimos(item datos[]) {
@@ -210,28 +219,6 @@ void test(tabla_cerrada *d,unsigned int (*resol_colisiones)(int pos_ini, int int
     
 }
 
-/*void testS(tabla_cerrada *d,unsigned int (*resol_colisiones)(int pos_ini, int intentos), unsigned int (*disp)()){
-	int i;
-	pos posicion;
-    inicializar_cerrada(d, tamTabla);
-	int colisionesTot=0, colisiones ,colisiones_busqueda;
-
-
-    for (i=0;i<6; i++) {
-    	leer_sinonimos(datos[i]);
-    	colisiones=insertar_cerrada(datos[i], "nombre propio", d, tamTabla, dispersion,resol_colisiones);
-    	colisionesTot+=colisiones;
-
-    }
-
-	printf("Numero total de colisiones al insertar los elementos: %d\n", colisionesTot);
-
-    for (i = 0; i < 7; i++) {
-    	colisiones_busqueda=0;
-       
-        posicion = buscar_cerrada(claves[i], *d, tamTabla, &colisiones_busqueda, dispersion, resol_colisiones);
-
-}*/
 
 void testS(tabla_cerrada *d, unsigned int (*resol_colisiones)(int pos_ini, int intentos), unsigned int (*disp)(char *clave, int tamTabla),  int tamS,item datos[], int numDatos) {
 	int i;
@@ -253,8 +240,151 @@ void testS(tabla_cerrada *d, unsigned int (*resol_colisiones)(int pos_ini, int i
     printf("Insertando %d elementos... Numero total de colisiones: %d\n", tamS, colisionesTot);
 
 }
+//FUNCIÓN DE TIEMPOS
+double tiempo(void (*funcion)(tabla_cerrada*, unsigned int (*resol_colisiones)(int, int), unsigned int (*disp)(char*, int), int, item[], int), 
+              void (*inicializacion)(tabla_cerrada*, int), 
+              unsigned int (*disp)(char*, int),
+              unsigned int (*resol_colisiones)(int, int),
+              tabla_cerrada *d, item datos[], int numDatos, int n) {
+    
+    double t1, t, t2, aux;
+    int k = 1000;
+    int i;
+
+    t1 = microsegundos();
+    for (i = 0; i < k; i++) {
+        inicializacion(d, n);
+        funcion(d, resol_colisiones, disp, n, datos, numDatos);
+    }
+    t2 = microsegundos();
+    t = t2 - t1;
+
+    if (t < 500) {
+        t1 = microsegundos();
+        for (i = 0; i < k; i++) {
+            inicializacion(d, n);
+        }
+        t2 = microsegundos();
+        aux = t2 - t1;
+        t1 = microsegundos();
+        for (i = 0; i < k; i++) {
+            inicializacion(d, n);
+            funcion(d, resol_colisiones, disp, n, datos, numDatos);
+        }
+        t2 = microsegundos();
+        t = (t2 - t1 - aux) / k;
+    } else {
+        t = t / k;
+    }
+
+    return t;
+}
 
 
+
+
+
+/*void printComplejidadCuadraticaA(void (*funcion_busqueda)(tabla_cerrada*, unsigned int (*resol_colisiones)(int, int), unsigned int (*disp)(char*, int), int, item[], int), 
+                                 void (*inicializacion)(tabla_cerrada*, int), 
+                                 unsigned int (*disp)(char*, int),
+                                 unsigned int (*resol_colisiones)(int, int),
+                                 tabla_cerrada *d, item datos[], int numDatos) {    
+    int n_values[] = {125, 250, 500, 1000, 2000, 4000, 8000, 16000};
+    int num_n = sizeof(n_values) / sizeof(n_values[0]); 
+    double t, n08, n1, nlogn;
+
+    printf("\n\nn \t t(n) \t\t t(n)/n^0.85 \t t(n)/n \t t(n)/(n*log(n))\n");
+for (i = 500; i <= 32000; i=i*2)
+	{
+		
+		asc=malloc(i * sizeof(int));
+		ascendente(asc, i);
+
+		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_ins,ascendente,i),
+			tiempo(ord_ins,ascendente,i)/pow(i,0.8),tiempo(ord_ins,ascendente,i)/i,tiempo(ord_ins,ascendente,i)/pow(i,1.1));
+	}
+    for (int i = 0; i < num_n; i++) {
+        int n = n_values[i];
+        inicializacion(d, n); 
+        t = tiempo(funcion_busqueda, inicializacion, disp, resol_colisiones, d, datos, n, n);
+        n08 = t / pow(n, 0.7);
+        n1 = t / pow(n,1.05);
+        nlogn = t / (n * log(n));
+        printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n", n, t, n08, n1, nlogn);
+    }
+}*/
+void printComplejidadCuadraticaB(void (*funcion_busqueda)(tabla_cerrada*, unsigned int (*resol_colisiones)(int, int), unsigned int (*disp)(char*, int), int, item[], int), 
+                                 void (*inicializacion)(tabla_cerrada*, int), 
+                                 unsigned int (*disp)(char*, int),
+                                 unsigned int (*resol_colisiones)(int, int),
+                                 tabla_cerrada *d, item datos[], int numDatos) {    
+    double t;
+    int i;
+
+
+    printf("\n\nn \t t(n) \t\t t(n)/n^0.85 \t t(n)/n \t t(n)/(n*log(n))\n");
+
+    for (i = 500; i <=32000; i*=2) {
+        inicializar_cerrada(d, i); 
+        t = tiempo(funcion_busqueda, inicializar_cerrada, dispersionB, resol_cuadratica, d, datos, i, i);
+        printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n", i, t, t / pow(i, 0.7), t / pow(i,1.05), t / (i * log(i)));
+    }
+}
+
+
+
+//dentro de cada una dispersion a y dispersion b
+//FUNCIÓN DE CALCULAR LA COMPLEJIDAD  DISPERSIÓN LINEAL
+
+
+
+/*void printComplejidadLinealA(){
+
+
+
+
+}
+
+void printComplejidadCuadraticaB(){
+
+}*/
+
+//FUNCIÓN DE CALCULAR LA COMPLEJIDAD DISPERSIÓN CUADRÁTICA A Y B
+
+/*void printComplejidadCuadraticaA(){
+
+}*/
+
+
+void funcion_busqueda(tabla_cerrada *d, unsigned int (*resol_colisiones)(int pos_ini, int num_intento), 
+                      unsigned int (*disp)(char *clave, int tamTabla), int tamTabla, item datos[], int numDatos) {
+    int i, colisiones;
+  
+   
+    // Mezcla aleatoriamente las claves
+    for (i = numDatos - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        item temp = datos[i];
+        datos[i] = datos[j];
+        datos[j] = temp;
+    }
+
+    // Ejecuta la búsqueda en el diccionario
+    for (i = 0; i < numDatos; i++) {
+         buscar_cerrada(datos[i].clave, *d, tamTabla, &colisiones, disp, resol_colisiones);
+    }
+}
+
+
+
+//FUNCIÓN DE CALCULAR LA COMPLEJIDAD DISPERSIÓN DOBLE
+
+/*void printComplejidadDobleA(){
+
+}
+void printComplejidadDobleB(){
+
+}*/
 
 int main(){
 	tabla_cerrada d;
@@ -262,14 +392,13 @@ int main(){
 	item datos[19062];
 	int numDatos = leer_sinonimos(datos);
 	
- 	 
-	//tabla_cerrada diccionario;
+ 	
 	int tamTabla =11;
-	//int colisiones;
-	//int pos;
+	
+	inicializar_semilla();
 	
 
-	//int colisiones;
+	
 	d = malloc(38197 * sizeof(entrada));
 	inicializar_cerrada(&d, tamTabla);
 	//CERRADA LINEAL
@@ -302,6 +431,8 @@ int main(){
 
 	printf("***Dispersión cerrada cuadratica con dispersión B\n");
 	testS(&d, resol_cuadratica, dispersionB, tamS,datos,numDatos);
+	printComplejidadCuadraticaB(funcion_busqueda, inicializar_cerrada, dispersionB, resol_cuadratica, &d, datos, numDatos);
+
 
 
 	printf("***Dispersión cerrada doble con dispersión A\n");
@@ -310,9 +441,6 @@ int main(){
 
 	printf("***Dispersión cerrada doble con dispersión B\n");
 	testS(&d, resol_doble, dispersionB, tamS,datos,numDatos);
-
-
-
 
 	free(d);
 	return 0;
