@@ -1,0 +1,102 @@
+ Ángela Garcia Sánchez: angela.gsanchez@udc.es y Xabier Guitián López: x.guitian@udc.es
+
+ Informe de la práctica 3: Algoritmos para tablas de dispersión cerrada lineal, cuadrática y doble.
+
+
+ 1.INTRODUCCIÓN
+
+
+ 2.UNIDADES DE MEDIDA
+  	Los tiempos se expresarán en microsegundos.
+
+ 3.CARÁCTERÍSTICAS DE LA MÁQUINA
+   	Marca: Micro-Star International Co., Ltd. Thin GF63 12VE
+    OS: Ubuntu 24.04 LTS
+    Kernel:  6.8.0-45-generic
+    CPU: 12th Gen Intel® Core™ i7-12650H × 16
+    Memoria Principal:16,0 GiB
+  
+
+ 4.MÉTODO
+
+
+
+
+
+  -Ejemplo de las clases de teoría:
+  ***TABLA CERRADA LINEAL
+{
+0- (IVAN )
+1-
+2-
+3-
+4-
+5-
+6- (LUIS )
+7- (ANA )
+8- (JOSE )
+9- (OLGA )
+10- (ROSA )
+}
+Numero total de colisiones al insertar los elementos: 12
+
+Al buscar: ANA, encuentro: ANA, colisiones: 0
+Al buscar: LUIS, encuentro: LUIS, colisiones: 0
+Al buscar: JOSE, encuentro: JOSE, colisiones: 1
+Al buscar: OLGA, encuentro: OLGA, colisiones: 2
+Al buscar: ROSA, encuentro: ROSA, colisiones: 4
+Al buscar: IVAN, encuentro: IVAN, colisiones: 5
+No encuentro: CARLOS, colisiones: 6
+
+***TABLA CERRADA CUADRÁTICA
+{
+0- (OLGA )
+1-
+2-
+3-
+4- (IVAN )
+5-
+6- (LUIS )
+7- (ANA )
+8- (JOSE )
+9-
+10- (ROSA )
+}
+Numero total de colisiones al insertar los elementos: 8
+
+Al buscar: ANA, encuentro: ANA, colisiones: 0
+Al buscar: LUIS, encuentro: LUIS, colisiones: 0
+Al buscar: JOSE, encuentro: JOSE, colisiones: 1
+Al buscar: OLGA, encuentro: OLGA, colisiones: 2
+Al buscar: ROSA, encuentro: ROSA, colisiones: 2
+Al buscar: IVAN, encuentro: IVAN, colisiones: 3
+No encuentro: CARLOS, colisiones: 5
+
+***TABLA CERRADA DOBLE
+{
+0-
+1- (IVAN )
+2-
+3-
+4-
+5-
+6- (LUIS )
+7- (ANA )
+8- (JOSE )
+9- (OLGA )
+10- (ROSA )
+}
+Numero total de colisiones al insertar los elementos: 8
+
+Al buscar: ANA, encuentro: ANA, colisiones: 0
+Al buscar: LUIS, encuentro: LUIS, colisiones: 0
+Al buscar: JOSE, encuentro: JOSE, colisiones: 1
+Al buscar: OLGA, encuentro: OLGA, colisiones: 2
+Al buscar: ROSA, encuentro: ROSA, colisiones: 2
+Al buscar: IVAN, encuentro: IVAN, colisiones: 3
+No encuentro: CARLOS, colisiones: 4
+
+
+ 5.MEDICIÓN DE LOS TIEMPOS DE EJECUCIÓN
+
+ 6.CONCLUSIÓN
