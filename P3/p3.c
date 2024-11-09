@@ -37,11 +37,11 @@ typedef struct {
 
 //UNSIGNED INTS
 unsigned int dispersionA(char *clave, int tamTabla) {
-	int i, n = MIN(8, strlen(clave));
-	unsigned int valor = clave[0];
-	for (i = 1; i < n; i++)
+ int i, n = MIN(8, strlen(clave));
+ unsigned int valor = clave[0];
+ for (i = 1; i < n; i++)
 	valor += clave[i];
-	return valor % tamTabla;
+ return valor % tamTabla;
 }
 
 unsigned int dispersionB(char *clave, int tamTabla) {
@@ -375,7 +375,7 @@ void printComplejidadLinealA(tabla_cerrada *d, int tam, item datos[], int numDat
 
     printf("\n\nn \t t(n) \t\t t(n)/log(n) \t t(n)/n^1.8 \t t(n)/(n*log(n))\n");
 
-    for (i = 500; i <=32000; i*=2) {
+    for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionA, resol_lineal, tam, d, datos, numDatos, i);
         printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
@@ -389,7 +389,7 @@ void printComplejidadLinealB(tabla_cerrada *d, int tam, item datos[], int numDat
 
     printf("\n\nn \t t(n) \t\t t(n)/n^0.9 \t t(n)/n^1.1 \t t(n)/(n*log(n))\n");
 
-    for (i = 500; i <=32000; i*=2) {
+    for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionB, resol_lineal, tam, d, datos, numDatos, i);
         printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
@@ -403,7 +403,7 @@ void printComplejidadCuadraticaA(tabla_cerrada *d, int tam, item datos[], int nu
 
     printf("\n\nn \t t(n) \t\t t(n)/n^1.3 \t t(n)/n \t t(n)/(n*log(n))\n");
 
-    for (i = 500; i <=32000; i*=2) {
+    for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionA, resol_cuadratica, tam, d, datos, numDatos, i);
         printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
@@ -417,7 +417,7 @@ void printComplejidadCuadraticaB(tabla_cerrada *d, int tam, item datos[], int nu
 
     printf("\n\nn \t t(n) \t\t t(n)/n^0.9 \t t(n)/n \t t(n)/(n*log(n))\n");
 
-    for (i = 500; i <=32000; i*=2) {
+    for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionB, resol_cuadratica, tam, d, datos, numDatos, i);
         printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
@@ -431,7 +431,7 @@ void printComplejidadDobleA(tabla_cerrada *d, int tam, item datos[], int numDato
 
     printf("\n\nn \t t(n) \t\t t(n)/n^1.3 \t t(n)/n \t t(n)/(n*log(n))\n");
 
-    for (i = 500; i <=32000; i*=2) {
+    for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionA, resol_doble, tam, d, datos, numDatos, i);
         printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
@@ -445,7 +445,7 @@ void printComplejidadDobleB(tabla_cerrada *d, int tam, item datos[], int numDato
 
     printf("\n\nn \t t(n) \t\t t(n)/n^0.9 \t t(n)/n \t t(n)/(n*log(n))\n");
 
-    for (i = 500; i <=32000; i*=2) {
+    for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionA, resol_doble, tam, d, datos, numDatos, i);
         printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
