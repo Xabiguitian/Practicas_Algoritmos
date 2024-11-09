@@ -37,11 +37,11 @@ typedef struct {
 
 //UNSIGNED INTS
 unsigned int dispersionA(char *clave, int tamTabla) {
- int i, n = MIN(8, strlen(clave));
- unsigned int valor = clave[0];
- for (i = 1; i < n; i++)
-	valor += clave[i];
- return valor % tamTabla;
+    int i, n = MIN(8, strlen(clave));
+    unsigned int valor = clave[0];
+    for (i = 1; i < n; i++)
+	    valor += clave[i];
+    return valor % tamTabla;
 }
 
 unsigned int dispersionB(char *clave, int tamTabla) {
@@ -197,8 +197,6 @@ void test(tabla_cerrada *d,unsigned int (*resol_colisiones)(int pos_ini, int int
     	colisionesTot+=colisiones;
 
     }
-
-
     mostrar_cerrada(*d, tamTabla);
 
 	printf("Numero total de colisiones al insertar los elementos: %d\n\n", colisionesTot);
@@ -219,19 +217,13 @@ void test(tabla_cerrada *d,unsigned int (*resol_colisiones)(int pos_ini, int int
 
 void testS(tabla_cerrada *d, unsigned int (*resol_colisiones)(int pos_ini, int intentos), unsigned int (*disp)(char *clave, int tamTabla),  int tamS,item datos[], int numDatos) {
 	int i;
-
-	
+    int colisionesTot=0, colisiones;
 
 	inicializar_cerrada(d, tamS);
 	
-
-	int colisionesTot=0, colisiones;
-
-
     for (i=0;i<numDatos; i++) {
     	colisiones=insertar_cerrada(datos[i].clave, datos[i].sinonimos, d, tamS, disp,resol_colisiones);
     	colisionesTot+=colisiones;
-
     }
 
     printf("Insertando %d elementos... Numero total de colisiones: %d\n", tamS, colisionesTot);
@@ -298,7 +290,6 @@ void printComplejidadLinealA(tabla_cerrada *d, int tam, item datos[], int numDat
              "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
-
         t = tiempo(dispersionA, resol_lineal, tam, d, datos, numDatos, i);
         if (t<500)
         {
@@ -361,7 +352,6 @@ void printComplejidadCuadraticaB(tabla_cerrada *d, int tam, item datos[], int nu
              "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
-
         t = tiempo(dispersionB, resol_cuadratica, tam, d, datos, numDatos, i);
         if (t<500)
         {
