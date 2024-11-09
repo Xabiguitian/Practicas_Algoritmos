@@ -185,11 +185,6 @@ int leer_sinonimos(item datos[]) {
 	return(i);
 }
 
-
-//CÁLCULO DEL TIEMPO DE EJECUCIÓN
-//CÁLCULO DE LAS COMPLEJIDADES
-
-
 void test(tabla_cerrada *d,unsigned int (*resol_colisiones)(int pos_ini, int intentos), int tamTabla){
 	int i;
 	pos posicion;
@@ -295,86 +290,11 @@ double tiempo(unsigned int (*disp)(char*, int),
     return t;
 }
 
-/*****************************************************************************/
-
-//FUNCIÓN DE TIEMPOS (ANTIGUA)
-/*
-double tiempo(void (*inicializacion)(tabla_cerrada*, int), 
-              unsigned int (*disp)(char*, int),
-              unsigned int (*resol_colisiones)(int, int),
-              tabla_cerrada *d, item datos[], int numDatos, int n) {
-    
-    double t1, t, t2, aux;
-    int k = 1000;
-    int i;
-
-    t1 = microsegundos();
-    for (i = 0; i; i++) {
-        buscar_cerrada(datos[i].clave, *d, tamTabla, &colisiones, disp, resol_colisiones);
-    }
-    t2 = microsegundos();
-    t = t2 - t1;
-
-    if (t < 500) {
-        t1 = microsegundos();
-        for (i = 0; i < k; i++) {
-            inicializacion(d, n);
-        }
-        t2 = microsegundos();
-        aux = t2 - t1;
-        t1 = microsegundos();
-        for (i = 0; i < k; i++) {
-            inicializacion(d, n);
-            funcion(d, resol_colisiones, disp, n, datos, numDatos);
-        }
-        t2 = microsegundos();
-        t = (t2 - t1 - aux) / k;
-    } else {
-        t = t / k;
-    }
-
-    return t;
-}
-
-*/
-
-
-
-/*void printComplejidadCuadraticaA(void (*funcion_busqueda)(tabla_cerrada*, unsigned int (*resol_colisiones)(int, int), unsigned int (*disp)(char*, int), int, item[], int), 
-                                 void (*inicializacion)(tabla_cerrada*, int), 
-                                 unsigned int (*disp)(char*, int),
-                                 unsigned int (*resol_colisiones)(int, int),
-                                 tabla_cerrada *d, item datos[], int numDatos) {    
-    int n_values[] = {125, 250, 500, 1000, 2000, 4000, 8000, 16000};
-    int num_n = sizeof(n_values) / sizeof(n_values[0]); 
-    double t, n08, n1, nlogn;
-
-    printf("\n\nn \t t(n) \t\t t(n)/n^0.85 \t t(n)/n \t t(n)/(n*log(n))\n");
-for (i = 500; i <= 32000; i=i*2)
-	{
-		
-		asc=malloc(i * sizeof(int));
-		ascendente(asc, i);
-
-		printf("%12d%16.2f%22.6f%22.6f%26.6f\n", i,tiempo(ord_ins,ascendente,i),
-			tiempo(ord_ins,ascendente,i)/pow(i,0.8),tiempo(ord_ins,ascendente,i)/i,tiempo(ord_ins,ascendente,i)/pow(i,1.1));
-	}
-    for (int i = 0; i < num_n; i++) {
-        int n = n_values[i];
-        inicializacion(d, n); 
-        t = tiempo(funcion_busqueda, inicializacion, disp, resol_colisiones, d, datos, n, n);
-        n08 = t / pow(n, 0.7);
-        n1 = t / pow(n,1.05);
-        nlogn = t / (n * log(n));
-        printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n", n, t, n08, n1, nlogn);
-    }
-}*/
-
 void printComplejidadLinealA(tabla_cerrada *d, int tam, item datos[], int numDatos) {    
     double t;
     int i;
 
-    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t           t(n)/n"
              "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
@@ -383,10 +303,10 @@ void printComplejidadLinealA(tabla_cerrada *d, int tam, item datos[], int numDat
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / i, t / (i * log(i)));
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / i, t / (i * log(i)));
         }
     }
 }
@@ -395,7 +315,7 @@ void printComplejidadLinealB(tabla_cerrada *d, int tam, item datos[], int numDat
     double t;
     int i;
 
-    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t      t(n)/n^1.05"
              "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
@@ -404,10 +324,10 @@ void printComplejidadLinealB(tabla_cerrada *d, int tam, item datos[], int numDat
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / pow(i, 1.05), t / (i * log(i)));
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / pow(i, 1.05), t / (i * log(i)));
         }
     }
 }
@@ -416,7 +336,7 @@ void printComplejidadCuadraticaA(tabla_cerrada *d, int tam, item datos[], int nu
     double t;
     int i;
 
-    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t           t(n)/n"
              "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
@@ -425,10 +345,10 @@ void printComplejidadCuadraticaA(tabla_cerrada *d, int tam, item datos[], int nu
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / i, t / (i * log(i)));
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / i, t / (i * log(i)));
         }
     }
 }
@@ -437,7 +357,7 @@ void printComplejidadCuadraticaB(tabla_cerrada *d, int tam, item datos[], int nu
     double t;
     int i;
 
-    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95       t(n)/n^1.05"
              "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
@@ -446,10 +366,10 @@ void printComplejidadCuadraticaB(tabla_cerrada *d, int tam, item datos[], int nu
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / pow(i, 1.05), t / (i * log(i)));
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / pow(i, 1.05), t / (i * log(i)));
         }
     }
 }
@@ -458,7 +378,7 @@ void printComplejidadDobleA(tabla_cerrada *d, int tam, item datos[], int numDato
     double t;
     int i;
 
-    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t           t(n)/n"
              "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
@@ -467,10 +387,10 @@ void printComplejidadDobleA(tabla_cerrada *d, int tam, item datos[], int numDato
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / pow(i,1), t / (i * log(i)));
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / pow(i,1), t / (i * log(i)));
         }
     }
 }
@@ -479,7 +399,7 @@ void printComplejidadDobleB(tabla_cerrada *d, int tam, item datos[], int numDato
     double t;
     int i;
 
-    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95       t(n)/n^1.05"
              "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
@@ -488,67 +408,14 @@ void printComplejidadDobleB(tabla_cerrada *d, int tam, item datos[], int numDato
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / pow(i, 1.05), t / (i * log(i)));
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+                i, t, t / pow(i, 0.95), t / pow(i, 1.05), t / (i * log(i)));
         }
     }
 }
 
-//dentro de cada una dispersion a y dispersion b
-//FUNCIÓN DE CALCULAR LA COMPLEJIDAD  DISPERSIÓN LINEAL
-
-
-
-/*void printComplejidadLinealA(){
-
-
-
-
-}
-
-void printComplejidadCuadraticaB(){
-
-}*/
-
-//FUNCIÓN DE CALCULAR LA COMPLEJIDAD DISPERSIÓN CUADRÁTICA A Y B
-
-/*void printComplejidadCuadraticaA(){
-
-}*/
-
-/*
-void funcion_busqueda(tabla_cerrada *d, unsigned int (*resol_colisiones)(int pos_ini, int num_intento), 
-                      unsigned int (*disp)(char *clave, int tamTabla), int tamTabla, item datos[],
-                      int numDatos) {
-    int i, colisiones;
-  
-   
-    // Mezcla aleatoriamente las claves
-    for (i = numDatos - 1; i > 0; i--) {
-        int j = rand() % (i + 1);
-        item temp = datos[i];
-        datos[i] = datos[j];
-        datos[j] = temp;
-    }
-
-    // Ejecuta la búsqueda en el diccionario
-    for (i = 0; i < numDatos; i++) {
-         buscar_cerrada(datos[i].clave, *d, tamTabla, &colisiones, disp, resol_colisiones);
-    }
-}
-*/
-
-
-//FUNCIÓN DE CALCULAR LA COMPLEJIDAD DISPERSIÓN DOBLE
-
-/*void printComplejidadDobleA(){
-
-}
-void printComplejidadDobleB(){
-
-}*/
 
 int main(){
 	tabla_cerrada d;
