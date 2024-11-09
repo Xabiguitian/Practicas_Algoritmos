@@ -10,11 +10,11 @@
   	Los tiempos se expresarán en microsegundos.
 
  3.CARÁCTERÍSTICAS DE LA MÁQUINA
-   	Marca: Micro-Star International Co., Ltd. Thin GF63 12VE
-    OS: Ubuntu 24.04 LTS
-    Kernel:  6.8.0-45-generic
-    CPU: 12th Gen Intel® Core™ i7-12650H × 16
-    Memoria Principal:16,0 GiB
+   	Marca: Micro-Star International Co., Ltd.
+    OS: Ubuntu 24.04.1 LTS
+    Kernel:  6.8.0-47-generic
+    CPU: AMD Ryzen 5 3600 6-Core Processor
+    Memoria Principal: 32,0 GiB
   
 
  4.MÉTODO
