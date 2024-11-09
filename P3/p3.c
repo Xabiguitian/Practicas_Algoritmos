@@ -289,6 +289,7 @@ double tiempo(unsigned int (*disp)(char*, int),
             }
         }
         t2 = microsegundos();
+        
         t = (t2 - t1 - aux) / k;
     }
     return t;
@@ -373,13 +374,20 @@ void printComplejidadLinealA(tabla_cerrada *d, int tam, item datos[], int numDat
     double t;
     int i;
 
-    printf("\n\nn \t t(n) \t\t t(n)/log(n) \t t(n)/n^1.8 \t t(n)/(n*log(n))\n");
+    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+             "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionA, resol_lineal, tam, d, datos, numDatos, i);
-        printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
-                i, t, t / log(i), t / pow(i,1.8), t / (i * log(i)));
+        if (t<500)
+        {
+            printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+        }else{
+            printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+        }
     }
 }
 
@@ -387,13 +395,20 @@ void printComplejidadLinealB(tabla_cerrada *d, int tam, item datos[], int numDat
     double t;
     int i;
 
-    printf("\n\nn \t t(n) \t\t t(n)/n^0.9 \t t(n)/n^1.1 \t t(n)/(n*log(n))\n");
+    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+             "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionB, resol_lineal, tam, d, datos, numDatos, i);
-        printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
-                i, t, t / pow(i, 0.9), t / pow(i,1.1), t / (i * log(i)));
+        if (t<500)
+        {
+            printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+        }else{
+            printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+        }
     }
 }
 
@@ -401,13 +416,20 @@ void printComplejidadCuadraticaA(tabla_cerrada *d, int tam, item datos[], int nu
     double t;
     int i;
 
-    printf("\n\nn \t t(n) \t\t t(n)/n^1.3 \t t(n)/n \t t(n)/(n*log(n))\n");
+    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+             "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionA, resol_cuadratica, tam, d, datos, numDatos, i);
-        printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
-                i, t, t / pow(i, 1.4), t / pow(i,1), t / (i * log(i)));
+        if (t<500)
+        {
+            printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+        }else{
+            printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+        }
     }
 }
 
@@ -415,13 +437,20 @@ void printComplejidadCuadraticaB(tabla_cerrada *d, int tam, item datos[], int nu
     double t;
     int i;
 
-    printf("\n\nn \t t(n) \t\t t(n)/n^0.9 \t t(n)/n \t t(n)/(n*log(n))\n");
+    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+             "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionB, resol_cuadratica, tam, d, datos, numDatos, i);
-        printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
-                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+        if (t<500)
+        {
+            printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+        }else{
+            printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+        }
     }
 }
 
@@ -429,13 +458,20 @@ void printComplejidadDobleA(tabla_cerrada *d, int tam, item datos[], int numDato
     double t;
     int i;
 
-    printf("\n\nn \t t(n) \t\t t(n)/n^1.3 \t t(n)/n \t t(n)/(n*log(n))\n");
+    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+             "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionA, resol_doble, tam, d, datos, numDatos, i);
-        printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
-                i, t, t / pow(i, 1.5), t / pow(i,1), t / (i * log(i)));
+        if (t<500)
+        {
+            printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+        }else{
+            printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+        }
     }
 }
 
@@ -443,13 +479,20 @@ void printComplejidadDobleB(tabla_cerrada *d, int tam, item datos[], int numDato
     double t;
     int i;
 
-    printf("\n\nn \t t(n) \t\t t(n)/n^0.9 \t t(n)/n \t t(n)/(n*log(n))\n");
+    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.9\t           t(n)/n"
+             "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=16000; i*=2) {
 
         t = tiempo(dispersionA, resol_doble, tam, d, datos, numDatos, i);
-        printf("%d \t %.3f \t %.6f \t %.6f \t %.6f\n",
-                i, t, t / pow(i, 0.9), t / pow(i,1), t / (i * log(i)));
+        if (t<500)
+        {
+            printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+        }else{
+            printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.9), t / i, t / (i * log(i)));
+        }
     }
 }
 
@@ -567,4 +610,3 @@ int main(){
 	free(d);
 	return 0;
 }
- 
