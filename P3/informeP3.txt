@@ -4,100 +4,32 @@
 
 
  1.INTRODUCCIÓN
-
+En esta práctica, vamos a implementar un programa de consulta de sinónimos, utilizando 
+una base de datos proporcionada en el archivo de texto "sinonimos.txt".
+Vamos a desarrollar diferentes implementaciones de diccionarios de datos 
+que se basan en tablas de dispersión cerrada, que aplican técnicas de resolución de colisiones que son,
+exploración cuadrática, lineal y exploración doble.
+Además, evaluaremos el rendimiento de cada una de las implementaciones, 
+usando ds funciones de dispersión distintas, que aplicaremos en las técnicas de reolución de colisiones mencionadas anteriormente.Finalmente, realizaremos un análisis empírico de la complejidad de los algoritmos implementados.
 
  2.UNIDADES DE MEDIDA
   	Los tiempos se expresarán en microsegundos.
 
  3.CARÁCTERÍSTICAS DE LA MÁQUINA
-   	Marca: Micro-Star International Co., Ltd.
-    OS: Ubuntu 24.04.1 LTS
-    Kernel:  6.8.0-47-generic
-    CPU: AMD Ryzen 5 3600 6-Core Processor
-    Memoria Principal: 32,0 GiB
+   Marca: Micro-Star International Co., Ltd.
+   OS: Ubuntu 24.04.1 LTS
+   Kernel:  6.8.0-47-generic
+   CPU: AMD Ryzen 5 3600 6-Core Processor
+   Memoria Principal: 32,0 GiB
   
 
  4.MÉTODO
+Ponemos a prueba las tres técnicas de resolución de colisiones de dispersión cerrada: lineal,
+cuadrática y doble.En cada una de ellas aplicaremos las dos funciones de dispersión del enunciado de la práctica y
+observaremos el resultado de cada una de ellas.
+Primero, analizaremos las técnicas de resolución de colisiones,
+y para ello utilizaremos el ejemplo visto en las clases teóricas:
 
-
-
-
-
-  -Ejemplo de las clases de teoría:
-  ***TABLA CERRADA LINEAL
-{
-0- (IVAN )
-1-
-2-
-3-
-4-
-5-
-6- (LUIS )
-7- (ANA )
-8- (JOSE )
-9- (OLGA )
-10- (ROSA )
-}
-Numero total de colisiones al insertar los elementos: 12
-
-Al buscar: ANA, encuentro: ANA, colisiones: 0
-Al buscar: LUIS, encuentro: LUIS, colisiones: 0
-Al buscar: JOSE, encuentro: JOSE, colisiones: 1
-Al buscar: OLGA, encuentro: OLGA, colisiones: 2
-Al buscar: ROSA, encuentro: ROSA, colisiones: 4
-Al buscar: IVAN, encuentro: IVAN, colisiones: 5
-No encuentro: CARLOS, colisiones: 6
-
-***TABLA CERRADA CUADRÁTICA
-{
-0- (OLGA )
-1-
-2-
-3-
-4- (IVAN )
-5-
-6- (LUIS )
-7- (ANA )
-8- (JOSE )
-9-
-10- (ROSA )
-}
-Numero total de colisiones al insertar los elementos: 8
-
-Al buscar: ANA, encuentro: ANA, colisiones: 0
-Al buscar: LUIS, encuentro: LUIS, colisiones: 0
-Al buscar: JOSE, encuentro: JOSE, colisiones: 1
-Al buscar: OLGA, encuentro: OLGA, colisiones: 2
-Al buscar: ROSA, encuentro: ROSA, colisiones: 2
-Al buscar: IVAN, encuentro: IVAN, colisiones: 3
-No encuentro: CARLOS, colisiones: 5
-
-***TABLA CERRADA DOBLE
-{
-0-
-1- (IVAN )
-2-
-3-
-4-
-5-
-6- (LUIS )
-7- (ANA )
-8- (JOSE )
-9- (OLGA )
-10- (ROSA )
-}
-Numero total de colisiones al insertar los elementos: 8
-
-Al buscar: ANA, encuentro: ANA, colisiones: 0
-Al buscar: LUIS, encuentro: LUIS, colisiones: 0
-Al buscar: JOSE, encuentro: JOSE, colisiones: 1
-Al buscar: OLGA, encuentro: OLGA, colisiones: 2
-Al buscar: ROSA, encuentro: ROSA, colisiones: 2
-Al buscar: IVAN, encuentro: IVAN, colisiones: 3
-No encuentro: CARLOS, colisiones: 4
-
-
- 5.MEDICIÓN DE LOS TIEMPOS DE EJECUCIÓN
 ***TABLA CERRADA LINEAL
 {
 0- (IVAN )
@@ -170,33 +102,49 @@ Al buscar: ROSA, encuentro: ROSA, colisiones: 2
 Al buscar: IVAN, encuentro: IVAN, colisiones: 3
 No encuentro: CARLOS, colisiones: 4
 
+ 5.MEDICIÓN DE LOS TIEMPOS DE EJECUCIÓN
+
+ Ahora, analizaremos esas técnicas de resolución con las dos funciones de dispersión
+ dadas en el enunciado.Finalmente analizaremos su complejidad computacional, 
+ calculando su cota constante, subestimada y sobrestimada; indicando sus
+ mediciones anómalas (#) y  los tiempos en los que se haga menos de 500 iteraciones (*).
+
 ***Dispersión cerrada lineal con dispersión A
 Insertando 38197 elementos... Numero total de colisiones: 172623183
 
 
 	  n		 t(n) 	    t(n)/n^0.95	           t(n)/n   t(n)/(n*log(n))
-        125          8770.000         89.317196         70.160000         14.530953
+        125          8770.000         89.317196         70.160000         14.530953 #
         250         16189.000         85.344790         64.756000         11.728055
         500         32308.000         88.163449         64.616000         10.397438
        1000         64159.000         90.626996         64.159000          9.287967
        2000        131589.000         96.214625         65.794500          8.656143
-       4000        274725.000        103.977936         68.681250          8.280786
+       4000        274725.000        103.977936         68.681250          8.280786 #
        8000        540630.000        105.916752         67.578750          7.519447
-      16000       1099355.000        111.486934         68.709688          7.097856
+      16000       1099355.000        111.486934         68.709688          7.097856 #
+
+
+ Cota subestimada: n^0.95
+ Cota constante:   n
+ Cota sobrestimada:n*log(n)
 
 ***Dispersión cerrada lineal con dispersión B
 Insertando 38197 elementos... Numero total de colisiones: 16965
 
 
 	  n		 t(n) 	    t(n)/n^0.95	      t(n)/n^1.05   t(n)/(n*log(n))
-(*)     125             8.693          0.088533          0.054628          0.014403
+(*)     125             8.693          0.088533          0.054628          0.014403 #
 (*)     250            16.742          0.088260          0.050812          0.012129
 (*)     500            33.307          0.090890          0.048822          0.010719
 (*)    1000            66.549          0.094003          0.047113          0.009634
 (*)    2000           132.775          0.097082          0.045398          0.008734
 (*)    4000           262.058          0.099184          0.043275          0.007899
-       8000           692.000          0.135572          0.055190          0.009625
-      16000          1398.000          0.141773          0.053849          0.009026
+       8000           692.000          0.135572          0.055190          0.009625 #
+      16000          1398.000          0.141773          0.053849          0.009026 #
+
+Cota subestimada: n^0.95
+Cota constante: n^1.05
+Cota sobrestimada: n*log(n)
 
 ***Dispersión cerrada cuadratica con dispersión A
 Insertando 38197 elementos... Numero total de colisiones: 2106581
@@ -204,55 +152,90 @@ Insertando 38197 elementos... Numero total de colisiones: 2106581
 
 	  n		 t(n) 	    t(n)/n^0.95	           t(n)/n   t(n)/(n*log(n))
 (*)     125           440.397          4.485180          3.523176          0.729691
-        250           857.000          4.517912          3.428000          0.620850
-        500          1847.000          5.040172          3.694000          0.594406
+        250           857.000          4.517912          3.428000          0.620850 #
+        500          1847.000          5.040172          3.694000          0.594406 #
        1000          3526.000          4.980607          3.526000          0.510441
        2000          7159.000          5.234484          3.579500          0.470931
-       4000         15534.000          5.879309          3.883500          0.468227
+       4000         15534.000          5.879309          3.883500          0.468227 #
        8000         28461.000          5.575896          3.557625          0.395855
       16000         57008.000          5.781251          3.563000          0.368065
+ Cota subestimada: n^0.95
+ Cota constante:n
+ Cota sobrestimada:n*log(n)
 
 ***Dispersión cerrada cuadratica con dispersión B
 Insertando 38197 elementos... Numero total de colisiones: 13366
 
 
-	  n		 t(n) 	    t(n)/n^0.95       t(n)/n^1.05   t(n)/(n*log(n))
-(*)     125            10.371          0.105622          0.065173          0.017184
+	  n		 t(n) 	         t(n)/n^0.95       t(n)/n^1.05   t(n)/(n*log(n))
+(*)     125            10.371          0.105622          0.065173          0.017184 #
 (*)     250            20.021          0.105546          0.060764          0.014504
 (*)     500            39.999          0.109151          0.058631          0.012873
 (*)    1000            79.830          0.112763          0.056515          0.011557
 (*)    2000           159.474          0.116603          0.054527          0.010490
-(*)    4000           318.831          0.120671          0.052650          0.009610
-       8000           809.000          0.158494          0.064521          0.011252
+(*)    4000           318.831          0.120671          0.052650          0.009610 #
+       8000           809.000          0.158494          0.064521          0.011252 #
       16000          1631.000          0.165402          0.062824          0.010530
+
+Cota subestimada:n^0.95
+Cota constante:n^1.05
+Cota sobrestimada:n*log(n)
 
 ***Dispersión cerrada doble con dispersión A
 Insertando 38197 elementos... Numero total de colisiones: 1451531
 
 
-	  n		 t(n) 	    t(n)/n^0.95	           t(n)/n   t(n)/(n*log(n))
+	  n		 t(n) 	        t(n)/n^0.95	          t(n)/n   t(n)/(n*log(n))
 (*)     125           124.505          1.268009          0.996040          0.206291
-(*)     250           248.477          1.309915          0.993908          0.180008
+(*)     250           248.477          1.309915          0.993908          0.180008 #
         500           519.000          1.416269          1.038000          0.167026
        1000          1029.000          1.453501          1.029000          0.148963
-       2000          1990.000          1.455039          0.995000          0.130906
+       2000          1990.000          1.455039          0.995000          0.130906 #
        4000          4041.000          1.529438          1.010250          0.121804
        8000          8152.000          1.597087          1.019000          0.113384
       16000         16124.000          1.635155          1.007750          0.104103
+
+Cota subestimada:n^0.95
+Cota constante:n
+Cota sobrestimada:n*log(n)
 
 ***Dispersión cerrada doble con dispersión B
 Insertando 38197 elementos... Numero total de colisiones: 19401
 
 
-	  n		 t(n) 	    t(n)/n^0.95       t(n)/n^1.05   t(n)/(n*log(n))
+	  n		 t(n) 	        t(n)/n^0.95       t(n)/n^1.05   t(n)/(n*log(n))
 (*)     125             8.328          0.084816          0.052334          0.013799
 (*)     250            15.778          0.083178          0.047887          0.011430
 (*)     500            31.407          0.085705          0.046037          0.010107
 (*)    1000            62.606          0.088433          0.044322          0.009063
-(*)    2000           124.987          0.091387          0.042735          0.008222
-(*)    4000           249.947          0.094600          0.041275          0.007534
-       8000           675.000          0.132242          0.053834          0.009388
+(*)    2000           124.987          0.091387          0.042735          0.008222 #
+(*)    4000           249.947          0.094600          0.041275          0.007534 #
+       8000           675.000          0.132242          0.053834          0.009388 #
       16000          1340.000          0.135891          0.051615          0.008652
+
+ Cota subestimada:n^0.95
+ Cota constante:n^1.05
+ Cota sobrestimada:n*log(n)
 
 
  6.CONCLUSIÓN
+En esta práctica hemos evaluado diferentes técnicas de resolución de colisiones, 
+en combinación con técnicas de dispersión.
+Dispersión A y B muestras diferencias significativas, ya que dispersión A es un
+algoritmo menos óptimo que el B, lo que hace que genre muchas más colisiones 
+que Dispersión B(claro ejemplo en la dispersión cerrada lineal).En resumen,
+dispersión B es más eficiente y presenta un número significativamente menor
+que el de la dispersión A.
+Con respecto a las estrategias de resolución de colisiones, la exploración
+lineal, analizando los resultados, es la técnica menos eficiente debido a
+que el número de colisiones aumenta rapidamente.Una opción adecuada, es la
+exploración cuadrática, porque reduce su número de colisiones 
+significativamente con respecto a la exploración lineal 
+(aunque con Dispersión A sigue siendo elevada).Consideramos, que la más
+eficiente es la exploración doble ya que el número de colisiones es
+considerablemente menor que en los anteriores casos además de que el tiempo
+de búsqueda también decrece.
+Analizando todos los casos posibles, hemos llegado a la conclusión de que 
+el algoritmo más eficiente para la inserción del diccionario, analizando 
+el tiempo de búsqueda y el número de colisiones, es la exploración doble
+con Dispersión B.
