@@ -1,23 +1,47 @@
-#include<stdio.h>
+//DEFINICIÓN DE LIBRERÍAS
+#include <stdio.h>
+#include <time.h>
+#include <sys/time.h>
+#include <stdlib.h>
+#include "monticulos.h"
+#include <math.h>
+
+
+//DEFINICIÓN DE CONSTANTES
 
 #define TAM 256000
 
+//DEFINICIÓN DE STRUCTS Y TYPEDEFS
 struct monticulo {
     int ultimo;
     int vector[TAM];
 };
 typedef struct monticulo * pmonticulo;
 
+//FUNCIÓN INICIALIZAR SEMILLA
+
+void inicializar_semilla(){
+    srand(time(NULL));
+}
+
+//FUNCIÓN MICROSEGUNDOS
+double microsegundos(){
+    struct timeval t;
+    if (gettimeofday(&t, NULL) < 0){
+        return 0.0;
+    }
+    return (t.tv_usec + t.tv_sec * 1000000.0);
+}
+
+
+//DEFINICIÓN DE FUNCIONES
 void iniMonticulo(pmonticulo m);
 void insertarMonticulo(pmonticulo m, int x);
 void quitarMenor(pmonticulo m);
 int consultarMenor(const pmonticulo m);
 void crearMonticulo(pmonticulo m, int v [], int n);
 void flotar(pmonticulo m, int i);
-void intercambiar(pmonticulo *m1, pmonticulo *m2);
-void insertar (int x, pmonticulo m);
-void hundir(pmonticulo m, int i);
-int eliminarMax (pmonticulo m);
+
 
 
 void iniMonticulo(pmonticulo m){
@@ -41,14 +65,7 @@ void insertarMonticulo(pmonticulo m, int x){
     
 }
 
-void flotar(pmonticulo m, int i){
-    while (i>1 && m->vector[i/2] < m->vector[i])
-    {
-        intercambiar(m->vector[i/2], m->vector[i]);
-        i = i/2;
-    }
-    
-}
+//FUNCIÓN AUXILIAR PARA FLOTAR
 
 void intercambiar(pmonticulo *m1, pmonticulo *m2){
     pmonticulo aux = m1;
@@ -56,17 +73,18 @@ void intercambiar(pmonticulo *m1, pmonticulo *m2){
     m2 = aux;
 }
 
-void insertar (int x, pmonticulo m){
-    if(m->ultimo >= TAM){
-        printf("Error: Montículo lleno");
-    }else{
-        m->ultimo++;
-        m->vector[m->ultimo] = x;
-        flotar(m, m->ultimo);
+void flotar(monticulo *M, int i) {
+
+    while (i > 1 && M->vector[i / 2] < M->vector[i]) {
+
+        intercambiar(&M->vector[i/2], &M->vector[i]);
+        i = i / 2;
     }
 }
+    
 
-void hundir(pmonticulo m, int i){
+
+/*void hundir(pmonticulo m, int i){
     int j = -1, hijoizq, hijoder;
     while(j=!i){
         hijoizq = 2*i;
@@ -80,9 +98,11 @@ void hundir(pmonticulo m, int i){
         }
         intercambiar(m->vector[j], m->vector[i]);
     }
-}
+}*/  
 
-int eliminarMax (pmonticulo m){
+
+
+/*int eliminarMax (pmonticulo m){
     int x;
     if (m->ultimo == 0){
         printf("Error: Montículo vacío");
@@ -95,4 +115,22 @@ int eliminarMax (pmonticulo m){
         }
         return x;
     }
+}*/ 
+
+void quitarMenor(pmonticulo m){
+
+}
+int consultarMenor(const pmonticulo m){
+
+}
+
+
+
+int main(){
+
+
+inicializar_semilla();
+
+
+
 }
