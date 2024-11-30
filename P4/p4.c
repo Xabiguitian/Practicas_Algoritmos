@@ -34,14 +34,7 @@ double microsegundos(){
 }
 
 
-//DEFINICIÓN DE FUNCIONES
-void iniMonticulo(pmonticulo m);
-void insertarMonticulo(pmonticulo m, int x);
-void quitarMenor(pmonticulo m);
-int consultarMenor(const pmonticulo m);
-void crearMonticulo(pmonticulo m, int v [], int n);
-void flotar(pmonticulo m, int i);
-
+//FUNCIONES PARA EL MONTICULO
 
 
 void iniMonticulo(pmonticulo m){
@@ -51,18 +44,6 @@ void iniMonticulo(pmonticulo m){
 void crearMonticulo(pmonticulo m, int v [], int n){
     iniMonticulo(m);
     return m;
-}
-
-void insertarMonticulo(pmonticulo m, int x){
-    if (m->ultimo >= TAM)
-    {
-        perror("Montículo lleno");
-    }else{
-        m->ultimo += 1;
-        m->vector[m->ultimo] = x;
-        flotar(m,m->ultimo);
-    }
-    
 }
 
 //FUNCIÓN AUXILIAR PARA FLOTAR
@@ -81,10 +62,24 @@ void flotar(monticulo *M, int i) {
         i = i / 2;
     }
 }
+
+
+void insertarMonticulo(pmonticulo m, int x){
+    if (m->ultimo >= TAM)
+    {
+        perror("Montículo lleno");
+    }else{
+        m->ultimo += 1;
+        m->vector[m->ultimo] = x;
+        flotar(m,m->ultimo);
+    }
     
+}
+
+  
 
 
-/*void hundir(pmonticulo m, int i){
+void hundir(pmonticulo m, int i){
     int j = -1, hijoizq, hijoder;
     while(j=!i){
         hijoizq = 2*i;
@@ -98,32 +93,86 @@ void flotar(monticulo *M, int i) {
         }
         intercambiar(m->vector[j], m->vector[i]);
     }
-}*/  
+} 
 
 
 
-/*int eliminarMax (pmonticulo m){
-    int x;
-    if (m->ultimo == 0){
-        printf("Error: Montículo vacío");
-    }else{
-        x = m->vector[1];
-        m->vector[1] = m->vector[m->ultimo];
-        m->ultimo--;
-        if (m->ultimo > 0){
-            hundir(m, 1);
-        }
-        return x;
-    }
-}*/ 
+
 
 void quitarMenor(pmonticulo m){
-
+ int x;
+    if (m->ultimo == 0) {
+        printf("Error: Montículo vacío\n");
+        return -1;  
+    } else {
+        x = m->vector[1]; 
+        m->vector[1] = m->vector[m->ultimo];  
+        m->ultimo--;  
+        if (m->ultimo > 0) {
+            hundir(m, 1);  
+        }
+        return x;  
+    }
 }
-int consultarMenor(const pmonticulo m){
-
+int consultarMenor(const pmonticulo m) {
+    if (m->ultimo == 0) {  
+        printf("Error: Montículo vacío\n");
+        return -1;  
+    }
+    return m->vector[1];  
 }
 
+
+//FUNCION AUX
+void print_heap(monticulo *M){
+    int i;
+    printf("[");
+    for(i=0;i<=M->ultimo;i++)
+        printf(" %d ",M->vector[i]);
+    printf("]\n");
+}
+
+
+//FUNCION TEST PARA COMPROBAR QUE VAN TODAS LAS FUNCIONES DE LOS MONTICULOS
+void test1(){
+    printf("----------------------------------------------------------------");
+    printf("\n");
+    int v[25],i;
+    pmonticulo m;
+    printf("[");
+    for(i=0;i<25;i++){
+        v[i]=i-12;
+        printf(" %d ",v[i]);
+    }
+    printf("]\n");
+    niMonticulo(&m);
+    crearMonticulo(v,25,&m);
+    print_heap(&m);
+    eliminar_mayor(&m);
+    print_heap(&m);
+    printf("----------------------------------------------------------------");
+    printf("\n");
+}
+
+
+//FUNCION ASCENDENTE, DESCENDENTE Y ALEATORIO
+
+//FUNCION DE TIEMPOS
+
+//IMPRIMIR TABLAS DE COMPLEJIDAD
+
+
+//ORDENACIÓN MONTICULOS
+
+void ordenarPorMonticulos(){
+    int i;
+    crearMonticulo(m,v,n);
+    for(i=0; i<n; i++){
+        v[i]=consultarMenor(m);
+        quitarMenor(m);
+
+    }
+}
 
 
 int main(){
