@@ -27,8 +27,8 @@ void insertarMonticulo(pmonticulo m, int x);
 void hundir(pmonticulo m, int i);
 int quitarMenor(pmonticulo m);
 int consultarMenor(const pmonticulo m);
-void generarVectorAleat(pmonticulo m, int tam, int rangoMin, int rangoMax);
 void imprimirMonticulo(const pmonticulo m);
+void crearVectorPrueba(int v[], int tam);
 void testProbarFunciones();
 
 //FUNCIÓN INICIALIZAR SEMILLA
@@ -56,14 +56,13 @@ void iniMonticulo(pmonticulo m){
 
 void crearMonticulo(pmonticulo m, int v [], int n){
     int i;
-    for (i =0; i < n; ++i){
+    for (i = 0; i <= n; ++i){
         m->vector[i] = v[i];
     }
 
-    m->ultimo = n - 1;
+    m->ultimo = n-1;
 
-    for (i = n; i >= 0; --i)
-    {
+    for (i = n; i >= 0; --i){
         hundir(m, i);
     }
 }
@@ -123,8 +122,8 @@ int quitarMenor(pmonticulo m){
         printf("Error: Montículo vacío\n");
         return -1;  
     } else {
-        x = m->vector[1]; 
-        m->vector[1] = m->vector[m->ultimo];  
+        x = m->vector[0]; 
+        m->vector[0] = m->vector[m->ultimo];  
         m->ultimo--;  
         if (m->ultimo > 0) {
             hundir(m, 1);  
@@ -138,48 +137,65 @@ int consultarMenor(const pmonticulo m) {
         printf("Error: Montículo vacío\n");
         return -1;  
     }
-    return m->vector[1];  
-}
-
-
-//FUNCIÓN PARA GENERAR EL VECTOR ALEATORIO
-void generarVectorAleat(pmonticulo m, int tam, int rangoMin, int rangoMax){
-int i;
-
-for(i=0;i<tam;i++){
-    m->vector[i]=rand()%(rangoMax-rangoMin +1) + rangoMin;
-}
-m->ultimo=tam-1;
+    return m->vector[0];  
 }
 
 
 //FUNCIÓN PARA IMPRIMIR EL MONTÍCULO
 void imprimirMonticulo(const pmonticulo m){
     int i;
-    for(i=0;i<m->ultimo;i++){
+    for(i=0;i<=m->ultimo;i++){
         printf("%d ", m->vector[i]);
     }
+    printf("\n");
+}
+
+void crearVectorPrueba(int v[], int tam){
+    int i;
+
+    v[0]=1;
+    v[1]=2;
+    v[2]=3;
+    v[3]=4;
+    v[4]=5;
+    v[5]=6;
+    v[6]=7;
+    v[7]=8;
+    v[8]=9;
+    v[9]=10;
+    v[10]=11;
+    v[11]=12;
+
+    for(i=0; i < tam; i++){
+        printf("%d ", v[i]);
+    }
+    printf("\n");
 }
 
 //FUNCION TEST PARA COMPROBAR QUE VAN TODAS LAS FUNCIONES DE LOS MONTICULOS
 
 void testProbarFunciones(){
-    int tam=10, rangoMin=1, rangoMax=100, x;
+    int tam=12, rangoMin=1, rangoMax=100, x, v[tam], v2[tam], i;
     pmonticulo mont = (pmonticulo)malloc(sizeof(struct monticulo));
     iniMonticulo(mont);
 
-    generarVectorAleat(mont, tam, rangoMin, rangoMax);
+
+    crearVectorPrueba(v,tam);
+    crearMonticulo(mont,v,tam);
     imprimirMonticulo(mont);
 
-    insertarMonticulo(mont, 50);
-    imprimirMonticulo(mont);
+    //insertarMonticulo(mont, 50);
+    //imprimirMonticulo(mont);
 
     int menor = consultarMenor(mont);
     printf("El menor valor es: %d\n", menor);
 
-    x = quitarMenor(mont);
-    printf("Cuando quitamos el valor %d y nos queda:\n", x);
-    imprimirMonticulo(mont);
+    for (i = 0; i < tam; i++)
+    {
+        x = quitarMenor(mont);
+        v2[i] = x;
+    }
+    imprimirMonticulo(v2);
 
     free(mont);
 }
