@@ -3,7 +3,6 @@
 #include <time.h>
 #include <sys/time.h>
 #include <stdlib.h>
-#include "monticulos.h"
 #include <math.h>
 
 
@@ -17,6 +16,20 @@ struct monticulo {
     int vector[TAM];
 };
 typedef struct monticulo * pmonticulo;
+
+void inicializar_semilla();
+double microsegundos();
+void iniMonticulo(pmonticulo m);
+void crearMonticulo(pmonticulo m, int v [], int n);
+void intercambiar(int *a, int *b);
+void flotar(pmonticulo M, int i);
+void insertarMonticulo(pmonticulo m, int x);
+void hundir(pmonticulo m, int i);
+int quitarMenor(pmonticulo m);
+int consultarMenor(const pmonticulo m);
+void generarVectorAleat(pmonticulo m, int tam, int rangoMin, int rangoMax);
+void imprimirMonticulo(const pmonticulo m);
+void testProbarFunciones();
 
 //FUNCIÓN INICIALIZAR SEMILLA
 
@@ -42,19 +55,29 @@ void iniMonticulo(pmonticulo m){
 }
 
 void crearMonticulo(pmonticulo m, int v [], int n){
-    iniMonticulo(m);
-    return m;
+    int i;
+    for (i =0; i < n; ++i){
+        m->vector[i] = v[i];
+    }
+
+    m->ultimo = n - 1;
+
+    for (i = n; i >= 0; --i)
+    {
+        hundir(m, i);
+    }
 }
 
 //FUNCIÓN AUXILIAR PARA FLOTAR
 
-void intercambiar(pmonticulo *m1, pmonticulo *m2){
-    pmonticulo aux = m1;
-    m1 = m2;
-    m2 = aux;
+void intercambiar(int *a, int *b){
+    int aux;
+    aux = *a;
+    *a = *b;
+    *b = aux;
 }
 
-void flotar(monticulo *M, int i) {
+void flotar(pmonticulo M, int i) {
 
     while (i > 1 && M->vector[i / 2] < M->vector[i]) {
 
@@ -76,14 +99,12 @@ void insertarMonticulo(pmonticulo m, int x){
     
 }
 
-  
-
 
 void hundir(pmonticulo m, int i){
     int j = -1, hijoizq, hijoder;
-    while(j=!i){
-        hijoizq = 2*i;
-        hijoder = 2*i+1;
+    do{
+        hijoizq = 2*i+1;
+        hijoder = 2*i+2;
         j = i;
         if (hijoder <= m ->ultimo && m->vector[hijoder] > m->vector[i]){
             i = hijoder;
@@ -91,17 +112,14 @@ void hundir(pmonticulo m, int i){
         if (hijoizq <= m ->ultimo && m->vector[hijoizq] > m->vector[i]){
             i = hijoizq;
         }
-        intercambiar(m->vector[j], m->vector[i]);
-    }
+        intercambiar(&m->vector[j], &m->vector[i]);
+    }while(j!=i);
 } 
 
 
-
-
-
-void quitarMenor(pmonticulo m){
- int x;
-    if (m->ultimo == 0) {
+int quitarMenor(pmonticulo m){
+    int x;
+    if (m->ultimo == -1) {
         printf("Error: Montículo vacío\n");
         return -1;  
     } else {
@@ -114,22 +132,13 @@ void quitarMenor(pmonticulo m){
         return x;  
     }
 }
+
 int consultarMenor(const pmonticulo m) {
-    if (m->ultimo == 0) {  
+    if (m->ultimo == -1) {  
         printf("Error: Montículo vacío\n");
         return -1;  
     }
     return m->vector[1];  
-}
-
-
-//FUNCION AUX
-void print_heap(monticulo *M){
-    int i;
-    printf("[");
-    for(i=0;i<=M->ultimo;i++)
-        printf(" %d ",M->vector[i]);
-    printf("]\n");
 }
 
 
@@ -146,31 +155,30 @@ m->ultimo=tam-1;
 
 //FUNCIÓN PARA IMPRIMIR EL MONTÍCULO
 void imprimirMonticulo(const pmonticulo m){
- int i;
-    for(i=0;i<n;i++){
-        m->vector[i]=v[i];
+    int i;
+    for(i=0;i<m->ultimo;i++){
+        printf("%d ", m->vector[i]);
     }
-    m->ultimo=n-1;
 }
 
 //FUNCION TEST PARA COMPROBAR QUE VAN TODAS LAS FUNCIONES DE LOS MONTICULOS
 
 void testProbarFunciones(){
-    int tam=10, rangoMin=1, rangoMax=100;
-     pmonticulo mont = (pmonticulo)malloc(sizeof(struct monticulo));
-     iniMonticulo(mont);
+    int tam=10, rangoMin=1, rangoMax=100, x;
+    pmonticulo mont = (pmonticulo)malloc(sizeof(struct monticulo));
+    iniMonticulo(mont);
 
-     generarVectorAleat(monticulo, tam, rangoMin, rangoMax);
-     imprimirMonticulo(mont);
+    generarVectorAleat(mont, tam, rangoMin, rangoMax);
+    imprimirMonticulo(mont);
 
-     insertarMonticulo(mont, 50);
-     imprimirMonticulo(mont);
+    insertarMonticulo(mont, 50);
+    imprimirMonticulo(mont);
 
-     int menor = consultarMenor(mont);
-     printf("El menor valor es: %d\n", menor);
+    int menor = consultarMenor(mont);
+    printf("El menor valor es: %d\n", menor);
 
-    quitarMenor(mont);
-    printf("Cuando quitamos el menor valor nos queda:\n");
+    x = quitarMenor(mont);
+    printf("Cuando quitamos el valor %d y nos queda:\n", x);
     imprimirMonticulo(mont);
 
     free(mont);
@@ -207,7 +215,7 @@ void testProbarFunciones(){
 
 //ORDENACIÓN MONTICULOS
 
-void ordenarPorMonticulos(){
+/*void ordenarPorMonticulos(){
     int i;
     crearMonticulo(m,v,n);
     for(i=0; i<n; i++){
@@ -215,16 +223,12 @@ void ordenarPorMonticulos(){
         quitarMenor(m);
 
     }
-}
+}*/
 
 
 int main(){
 
-
 inicializar_semilla();
 testProbarFunciones();
-
-
-
 
 }
