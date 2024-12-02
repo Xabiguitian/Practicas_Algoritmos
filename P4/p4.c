@@ -133,8 +133,51 @@ void print_heap(monticulo *M){
 }
 
 
+//FUNCIÓN PARA GENERAR EL VECTOR ALEATORIO
+void generarVectorAleat(pmonticulo m, int tam, int rangoMin, int rangoMax){
+int i;
+
+for(i=0;i<tam;i++){
+    m->vector[i]=rand()%(rangoMax-rangoMin +1) + rangoMin;
+}
+m->ultimo=tam-1;
+}
+
+
+//FUNCIÓN PARA IMPRIMIR EL MONTÍCULO
+void imprimirMonticulo(const pmonticulo m){
+ int i;
+    for(i=0;i<n;i++){
+        m->vector[i]=v[i];
+    }
+    m->ultimo=n-1;
+}
+
 //FUNCION TEST PARA COMPROBAR QUE VAN TODAS LAS FUNCIONES DE LOS MONTICULOS
-void test1(){
+
+void testProbarFunciones(){
+    int tam=10, rangoMin=1, rangoMax=100;
+     pmonticulo mont = (pmonticulo)malloc(sizeof(struct monticulo));
+     iniMonticulo(mont);
+
+     generarVectorAleat(monticulo, tam, rangoMin, rangoMax);
+     imprimirMonticulo(mont);
+
+     insertarMonticulo(mont, 50);
+     imprimirMonticulo(mont);
+
+     int menor = consultarMenor(mont);
+     printf("El menor valor es: %d\n", menor);
+
+    quitarMenor(mont);
+    printf("Cuando quitamos el menor valor nos queda:\n");
+    imprimirMonticulo(mont);
+
+    free(mont);
+}
+
+//FUNCION TEST PARA COMPROBAR QUE VAN TODAS LAS FUNCIONES DE LOS MONTICULOS
+/*void test1(){
     printf("----------------------------------------------------------------");
     printf("\n");
     int v[25],i;
@@ -152,7 +195,7 @@ void test1(){
     print_heap(&m);
     printf("----------------------------------------------------------------");
     printf("\n");
-}
+}*/
 
 
 //FUNCION ASCENDENTE, DESCENDENTE Y ALEATORIO
@@ -179,6 +222,8 @@ int main(){
 
 
 inicializar_semilla();
+testProbarFunciones();
+
 
 
 
