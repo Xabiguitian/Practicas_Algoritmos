@@ -250,7 +250,7 @@ void testOrdenarMonticulo(void (*algoritmo)(int[], int),int *vector, int tamV){
 
 //ORDENACIÓN MONTICULOS
 
-/*void ordenarPorMonticulos(){
+void ordenarPorMonticulos(){
     int i;
     crearMonticulo(m,v,n);
     for(i=0; i<n; i++){
@@ -258,7 +258,7 @@ void testOrdenarMonticulo(void (*algoritmo)(int[], int),int *vector, int tamV){
         quitarMenor(m);
 
     }
-}*/
+}
 
 
 //FUNCION ASCENDENTE, DESCENDENTE Y ALEATORIO
@@ -356,16 +356,70 @@ void tablaComplejidadCrearMonticulo(){
 }
 
 void tablaComplejidadAscendente(){
+  double t;
+  int i;
+
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t           t(n)/n"
+             "   t(n)/(n*log(n))\n");
+
+    for (i = 125; i <=K; i*=2) {
+
+        t = tiempo(ordenarPorMonticulos,ascendente,i);
+        if (t<500)
+        {
+            printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.95), t / pow(i,1), t / (i * log(i)));
+        }else{
+            printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.95), t / pow(i,1), t / (i * log(i)));
+        }
+    }
 
 
 
 }
 
 void tablaComplejidadDescendente(){
+  double t;
+  int i;
+
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t           t(n)/n"
+             "   t(n)/(n*log(n))\n");
+
+    for (i = 125; i <=K; i*=2) {
+
+        t = tiempo(ordenarPorMonticulos,descendente,i);
+        if (t<500)
+        {
+            printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.95), t / pow(i,1), t / (i * log(i)));
+        }else{
+            printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.95), t / pow(i,1), t / (i * log(i)));
+        }
+    }
 
 }
 
 void tablaComplejidadAleatorio(){
+ double t;
+  int i;
+
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t           t(n)/n"
+             "   t(n)/(n*log(n))\n");
+
+    for (i = 125; i <=K; i*=2) {
+
+        t = tiempo(ordenarPorMonticulos,aleatorio,i);
+        if (t<500)
+        {
+            printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.95), t / pow(i,1), t / (i * log(i)));
+        }else{
+            printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
+                i, t, t / pow(i, 0.95), t / pow(i,1), t / (i * log(i)));
+        }
+    }
 
 }
 
