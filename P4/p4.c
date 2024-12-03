@@ -30,6 +30,16 @@ int consultarMenor(const pmonticulo m);
 void imprimirMonticulo(const pmonticulo m);
 void crearVectorPrueba(int v[], int tam);
 void testProbarFunciones();
+void testOrdenarMonticulo();
+void ascendente();
+void descendente();
+void aleatorio();
+void OrdenarPorMontículos();
+void tablaComplejidadAleatorio();
+void tablaComplejidadAscendente();
+void tablaComplejidadDescendente();
+void tablaComplejidadCrearMonticulo();
+void tablaComplejidadInsertarMonticulo();
 
 //FUNCIÓN INICIALIZAR SEMILLA
 
@@ -200,34 +210,6 @@ void testProbarFunciones(){
     free(mont);
 }
 
-//FUNCION TEST PARA COMPROBAR QUE VAN TODAS LAS FUNCIONES DE LOS MONTICULOS
-/*void test1(){
-    printf("----------------------------------------------------------------");
-    printf("\n");
-    int v[25],i;
-    pmonticulo m;
-    printf("[");
-    for(i=0;i<25;i++){
-        v[i]=i-12;
-        printf(" %d ",v[i]);
-    }
-    printf("]\n");
-    niMonticulo(&m);
-    crearMonticulo(v,25,&m);
-    print_heap(&m);
-    eliminar_mayor(&m);
-    print_heap(&m);
-    printf("----------------------------------------------------------------");
-    printf("\n");
-}*/
-
-
-//FUNCION ASCENDENTE, DESCENDENTE Y ALEATORIO
-
-//FUNCION DE TIEMPOS
-
-//IMPRIMIR TABLAS DE COMPLEJIDAD
-
 
 //ORDENACIÓN MONTICULOS
 
@@ -240,6 +222,99 @@ void testProbarFunciones(){
 
     }
 }*/
+
+
+//FUNCION ASCENDENTE, DESCENDENTE Y ALEATORIO
+
+void ascendente(int v[], int n){
+ int i;
+    for (i = 0; i < n; i++) {
+        v[i] = i;
+    }
+}
+
+
+void descendente(int v[], int n){
+  int i;
+    for (i = n; i > 0; --i) {
+        v[n - i] = i - 1;
+    }
+
+}
+
+
+
+void aleatorio(int v[], int n){
+ int i, m = 2 * n + 1;
+    for (i = 0; i < n; i++)
+        v[i] = (rand() % m) - n;
+
+}
+
+//FUNCION DE TIEMPOS
+
+double tiempos(void (*algoritmo)(int[], int), void (*inicializa) (int [],int), int tam){
+
+    double t1, t,t2,aux;
+    int *v;
+    int i;
+
+
+    v= malloc(tam *sizeof(int));
+    inicializa(v, tam);
+
+    t1=microsegundos();
+    algoritmo(v,tam);
+    t2=microsegundos();
+    t=t2-t1;
+    if(t<500){
+        t1=microsegundos();
+        for(i=0;i<K;i++){
+            inicializa(v,tam);
+            algoritmo(v,tam);
+        }
+        t2=microsegundos();
+        aux=t2-t1;
+        t1=microsegundos();
+        for(i=0;i<K;i++){
+            inicializa(v,tam);
+        }
+        t2=microsegundos();
+        t=t2-t1;
+        t=(aux-t)/K;
+    }
+
+
+free (v);
+return t;
+
+}
+
+//IMPRIMIR TABLAS DE COMPLEJIDAD
+
+void tablaComplejidadInsertarMonticulo(){
+
+    printf("\n\nn \t t(n) \t\t t(n)/(n*log(n)) \t t(n)/(n*log(n))\t t(n)/(n*log(n))\n");
+}
+
+
+void tablaComplejidadCrearMonticulo(){
+
+    printf("\n\nn \t t(n) \t\t  t(n)/n \t t(n)/n \t  t(n)/n\n");
+}
+
+void tablaComplejidadAscendente(){
+
+}
+
+void tablaComplejidadDescendente(){
+
+}
+
+void tablaComplejidadAleatorio(){
+
+}
+
 
 
 int main(){
