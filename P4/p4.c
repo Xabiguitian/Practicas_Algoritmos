@@ -17,8 +17,11 @@ struct monticulo {
 };
 typedef struct monticulo * pmonticulo;
 
+
+//DEFINICIÓN DE LAS FUNCIONES
 void inicializar_semilla();
 double microsegundos();
+double tiempos(void (*algoritmo)(int[], int), void (*inicializa) (int [],int), int tam);
 void iniMonticulo(pmonticulo m);
 void crearMonticulo(pmonticulo m, int v [], int n);
 void intercambiar(int *a, int *b);
@@ -31,15 +34,17 @@ void imprimirMonticulo(const pmonticulo m);
 void crearVectorPrueba(int v[], int tam);
 void testProbarFunciones();
 void testOrdenarMonticulo();
-void ascendente();
-void descendente();
-void aleatorio();
+void ascendente(int v[], int n);
+void descendente(int v[], int n);
+void aleatorio(int v[], int n);
 void OrdenarPorMontículos();
 void tablaComplejidadAleatorio();
 void tablaComplejidadAscendente();
 void tablaComplejidadDescendente();
 void tablaComplejidadCrearMonticulo();
 void tablaComplejidadInsertarMonticulo();
+void printVector(int v[], int n);
+void testOrdenarMonticulo(void (*algoritmo)(int[], int),int *vector, int tamV);
 
 //FUNCIÓN INICIALIZAR SEMILLA
 
@@ -210,6 +215,38 @@ void testProbarFunciones(){
     free(mont);
 }
 
+void printVector(int v[], int n){
+    int i;
+    for(i=0;i<n;i++){
+        printf("%4d",v[i]);
+    }
+    printf("\n");
+}
+//FUNCION TEST PARA COMPROBAR QUE EL MONTICULO SE ORDENA CORRECTAMENTE CON LA FUNCIÓN IMPLEMENTADA.
+void testOrdenarMonticulo(void (*algoritmo)(int[], int),int *vector, int tamV){
+  int i, j;
+ 
+    //Vector desordenado
+    printf("Desordenado : \n");
+    printVector(algoritmo,tamV)
+   
+    
+    //Vector con formato montículo
+    printf("\nMontículo : \n");
+    pmonticulo M;
+    crearMonticulo(vector,n,&M);
+    for ( i = 0; i <= M.ultimo; i++) {
+        printf("%d ",M.vector[i]);
+    }
+    //Vector ordenado
+    ordenarPorMonticulos(vector,n);
+    printf("\nOrdenado :  \n");
+    for ( j = 0; j < n; ++j) {
+        printf("%d ",vector[i]);
+    }
+    printf("\n");
+}
+
 
 //ORDENACIÓN MONTICULOS
 
@@ -290,20 +327,37 @@ return t;
 
 }
 
+
+
 //IMPRIMIR TABLAS DE COMPLEJIDAD
 
 void tablaComplejidadInsertarMonticulo(){
+    printf("\n Inserción de Montículos\n");
+    printf("\n\n\t  N\t\t t(n) \t    O(n*log(n)) \n");
+    for (n = 500; n <= K; n = n * 2) {
+        tiempo = tiempos(ascendente,insertarMonticulo,n);
+        printf("%10d    \t|%14.3f\t|%14.8f\n",
+               n, tiempo, tiempo/n);
 
-    printf("\n\nn \t t(n) \t\t t(n)/(n*log(n)) \t t(n)/(n*log(n))\t t(n)/(n*log(n))\n");
-}
+   }
 
 
 void tablaComplejidadCrearMonticulo(){
+    int n;
+    double tiempo;
 
-    printf("\n\nn \t t(n) \t\t  t(n)/n \t t(n)/n \t  t(n)/n\n");
+    printf("\n Creacion de Monticulos\n");
+    printf("\n\n\t  N\t\t t(n) \t    O(n) \n");
+    for (n = 500; n <= K; n = n * 2) {
+        tiempo = tiempos(ascendente,crearMonticulo,n);
+        printf("%10d    \t|%14.3f\t|%14.8f\n",
+               n, tiempo, tiempo/n);
+
 }
 
 void tablaComplejidadAscendente(){
+
+
 
 }
 
@@ -318,8 +372,42 @@ void tablaComplejidadAleatorio(){
 
 
 int main(){
+int * desc, * asc, * aleat;
+desc=malloc(tamV * sizeof(int));
+int tamV=100;
+
 
 inicializar_semilla();
 testProbarFunciones();
+tablaComplejidadCrearMonticulo();
+tablaComplejidadInsertarMonticulo();
+
+
+ printf("Ascendente\n");
+ asc=malloc(tamV * sizeof(int));
+ testOrdenarMonticulo(ascendente,asc,tamV);
+ tablaComplejidadAscendente();
+
+
+ free(asc);
+
+
+
+
+
+ printf("Descendente\n");
+ desc=malloc(tamV * sizeof(int));
+ testOrdenarMonticulo(descendente,desc,tamV);
+ tablaComplejidadDescendente();
+
+
+ free(desc);
+
+ printf("Desordenado\n");
+ aleat=malloc(tamV * sizeof(int));
+ testOrdenarMonticulo(aleatorio,aleat,tamV);
+ tablaComplejidadAleatorio();
+
+free(aleat);
 
 }
