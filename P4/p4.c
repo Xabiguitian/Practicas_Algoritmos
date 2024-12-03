@@ -165,86 +165,65 @@ void imprimirMonticulo(const pmonticulo m){
     printf("\n");
 }
 
-void crearVectorPrueba(int v[], int tam){
+void crearVectorPrueba(int v[], int tam) {
     int i;
 
-    v[0]=1;
-    v[1]=2;
-    v[2]=3;
-    v[3]=4;
-    v[4]=5;
-    v[5]=6;
-    v[6]=7;
-    v[7]=8;
-    v[8]=9;
-    v[9]=10;
-    v[10]=11;
-    v[11]=12;
+    v[0] = 1;
+    v[1] = 2;
+    v[2] = 3;
+    v[3] = 4;
+    v[4] = 5;
+    v[5] = 6;
+    v[6] = 7;
+    v[7] = 8;
+    v[8] = 9;
+    v[9] = 10;
+    v[10] = 11;
+    v[11] = 12;
 
-    for(i=0; i < tam; i++){
-        printf("%d ", v[i]);
-    }
-    printf("\n");
+    pmonticulo mont = (pmonticulo)malloc(sizeof(struct monticulo));
+    iniMonticulo(mont);
+    crearMonticulo(mont, v, tam);
+    printf("Montículo generado a partir del vector:\n");
+    imprimirMonticulo(mont);
+    free(mont);
 }
 
 //FUNCION TEST PARA COMPROBAR QUE VAN TODAS LAS FUNCIONES DE LOS MONTICULOS
 
-void testProbarFunciones(){
-    int tam=12, rangoMin=1, rangoMax=100, x, v[tam], v2[tam], i;
+void testProbarFunciones() {
+    int tam = 12, v[tam];
     pmonticulo mont = (pmonticulo)malloc(sizeof(struct monticulo));
     iniMonticulo(mont);
-
-
-    crearVectorPrueba(v,tam);
-    crearMonticulo(mont,v,tam);
+    crearVectorPrueba(v, tam);
+    crearMonticulo(mont, v, tam);
     imprimirMonticulo(mont);
 
-    //insertarMonticulo(mont, 50);
-    //imprimirMonticulo(mont);
-
-    int menor = consultarMenor(mont);
-    printf("El menor valor es: %d\n", menor);
-
-    for (i = 0; i < tam; i++)
-    {
-        x = quitarMenor(mont);
-        v2[i] = x;
+    printf("El menor valor es: %d\n", consultarMenor(mont));
+    for (int i = 0; i < tam; i++) {
+        quitarMenor(mont);
     }
-    imprimirMonticulo(v2);
+    imprimirMonticulo(mont);
 
     free(mont);
 }
 
-void printVector(int v[], int n){
-    int i;
-    for(i=0;i<n;i++){
-        printf("%4d",v[i]);
-    }
-    printf("\n");
-}
+
 //FUNCION TEST PARA COMPROBAR QUE EL MONTICULO SE ORDENA CORRECTAMENTE CON LA FUNCIÓN IMPLEMENTADA.
-void testOrdenarMonticulo(void (*algoritmo)(int[], int),int *vector, int tamV){
-  int i, j;
- 
-    //Vector desordenado
-    printf("Desordenado : \n");
-    printVector(algoritmo,tamV)
-   
-    
-    //Vector con formato montículo
-    printf("\nMontículo : \n");
-    pmonticulo M;
-    crearMonticulo(vector,n,&M);
-    for ( i = 0; i <= M.ultimo; i++) {
-        printf("%d ",M.vector[i]);
-    }
-    //Vector ordenado
-    ordenarPorMonticulos(vector,n);
-    printf("\nOrdenado :  \n");
-    for ( j = 0; j < n; ++j) {
-        printf("%d ",vector[i]);
-    }
-    printf("\n");
+void testOrdenarMonticulo(void (*algoritmo)(int[], int), int *vector, int tamV) {
+    pmonticulo mont = (pmonticulo)malloc(sizeof(struct monticulo));
+    iniMonticulo(mont);
+
+    printf("Montículo inicial:\n");
+    crearMonticulo(mont, vector, tamV);
+    imprimirMonticulo(mont);
+
+    algoritmo(vector, tamV);
+
+    printf("Montículo ordenado:\n");
+    imprimirMonticulo(mont);
+
+    free(mont);
 }
 
 
@@ -426,42 +405,45 @@ void tablaComplejidadAleatorio(){
 
 
 int main(){
-int * desc, * asc, * aleat;
-desc=malloc(tamV * sizeof(int));
-int tamV=100;
+int main() {
+    int tamV = 100;
+    int *asc, *desc, *aleat;
 
+    inicializar_semilla();
 
-inicializar_semilla();
-testProbarFunciones();
-tablaComplejidadCrearMonticulo();
-tablaComplejidadInsertarMonticulo();
+    // Test de las funciones de montículos
+    testProbarFunciones();
 
+    // Crear tablas de complejidad
+    tablaComplejidadCrearMonticulo();
+    tablaComplejidadInsertarMonticulo();
 
- printf("Ascendente\n");
- asc=malloc(tamV * sizeof(int));
- testOrdenarMonticulo(ascendente,asc,tamV);
- tablaComplejidadAscendente();
+    // Prueba con datos ascendentes
+    printf("\nAscendente:\n");
+    asc = malloc(tamV * sizeof(int));
+    ascendente(asc, tamV);
+    testOrdenarMonticulo(ascendente, asc, tamV);
+    tablaComplejidadAscendente();
+    free(asc);
 
+    // Prueba con datos descendentes
+    printf("\nDescendente:\n");
+    desc = malloc(tamV * sizeof(int));
+    descendente(desc, tamV);
+    testOrdenarMonticulo(descendente, desc, tamV);
+    tablaComplejidadDescendente();
+    free(desc);
 
- free(asc);
+    // Prueba con datos aleatorios
+    printf("\nAleatorio:\n");
+    aleat = malloc(tamV * sizeof(int));
+    aleatorio(aleat, tamV);
+    testOrdenarMonticulo(aleatorio, aleat, tamV);
+    tablaComplejidadAleatorio();
+    free(aleat);
 
+    return 0;
+}
 
-
-
-
- printf("Descendente\n");
- desc=malloc(tamV * sizeof(int));
- testOrdenarMonticulo(descendente,desc,tamV);
- tablaComplejidadDescendente();
-
-
- free(desc);
-
- printf("Desordenado\n");
- aleat=malloc(tamV * sizeof(int));
- testOrdenarMonticulo(aleatorio,aleat,tamV);
- tablaComplejidadAleatorio();
-
-free(aleat);
 
 }
