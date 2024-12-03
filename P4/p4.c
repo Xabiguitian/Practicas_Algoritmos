@@ -404,7 +404,7 @@ void tablaComplejidadAleatorio(){
 
 
 
-int main(){
+
 int main() {
     int tamV = 100;
     int *asc, *desc, *aleat;
@@ -443,7 +443,6 @@ int main() {
     free(aleat);
 
     return 0;
-}
 
 
 }
