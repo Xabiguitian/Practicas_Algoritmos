@@ -120,10 +120,10 @@ void hundir(pmonticulo m, int i){
         hijoizq = 2*i+1;
         hijoder = 2*i+2;
         j = i;
-        if (hijoder <= m ->ultimo && m->vector[hijoder] > m->vector[i]){
+        if (hijoder <= m ->ultimo && m->vector[hijoder] < m->vector[i]){
             i = hijoder;
         }
-        if (hijoizq <= m ->ultimo && m->vector[hijoizq] > m->vector[i]){
+        if (hijoizq <= m ->ultimo && m->vector[hijoizq] < m->vector[i]){
             i = hijoizq;
         }
         intercambiar(&m->vector[i], &m->vector[j]);
