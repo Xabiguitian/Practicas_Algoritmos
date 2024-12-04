@@ -31,9 +31,9 @@ void imprimirMonticulo(const pmonticulo m);
 void crearVectorPrueba(int v[], int tam);
 void testProbarFunciones();
 void testOrdenarMonticulo();
-void ascendente();
-void descendente();
-void aleatorio();
+void ascendente(int v[], int n);
+void descendente(int v[], int n);
+void aleatorio(int v[], int n);
 void OrdenarPorMontículos();
 void tablaComplejidadAleatorio();
 void tablaComplejidadAscendente();
@@ -147,7 +147,11 @@ int consultarMenor(const pmonticulo m) {
         printf("Error: Montículo vacío\n");
         return -1;  
     }
-    return m->vector[0];  
+    int i, menor = m->vector[m->ultimo/2];
+    for (i = m->ultimo/2; i <= m->ultimo; i++){
+        if (m->vector[i] < menor) menor = m->vector[i];
+    }
+    return menor;  
 }
 
 
@@ -167,7 +171,7 @@ void crearVectorPrueba(int v[], int tam){
     v[1]=2;
     v[2]=3;
     v[3]=4;
-    v[4]=5;
+    v[4]=14;
     v[5]=6;
     v[6]=7;
     v[7]=8;
@@ -175,6 +179,8 @@ void crearVectorPrueba(int v[], int tam){
     v[9]=10;
     v[10]=11;
     v[11]=12;
+    v[12]=13;
+    v[13]=5;
 
     for(i=0; i < tam; i++){
         printf("%d ", v[i]);
@@ -185,7 +191,7 @@ void crearVectorPrueba(int v[], int tam){
 //FUNCION TEST PARA COMPROBAR QUE VAN TODAS LAS FUNCIONES DE LOS MONTICULOS
 
 void testProbarFunciones(){
-    int tam=12, rangoMin=1, rangoMax=100, x, v[tam], v2[tam], i;
+    int tam=14, rangoMin=1, rangoMax=100, x, v[tam], v2[tam], i;
     pmonticulo mont = (pmonticulo)malloc(sizeof(struct monticulo));
     iniMonticulo(mont);
 
@@ -253,7 +259,7 @@ void aleatorio(int v[], int n){
 
 //FUNCION DE TIEMPOS
 
-double tiempos(void (*algoritmo)(int[], int), void (*inicializa) (int [],int), int tam){
+/*double tiempos(void (*algoritmo)(int[], int), void (*inicializa) (int [],int), int tam){
 
     double t1, t,t2,aux;
     int *v;
@@ -288,7 +294,7 @@ double tiempos(void (*algoritmo)(int[], int), void (*inicializa) (int [],int), i
 free (v);
 return t;
 
-}
+}*/
 
 //IMPRIMIR TABLAS DE COMPLEJIDAD
 
