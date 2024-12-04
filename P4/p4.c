@@ -33,17 +33,16 @@ int consultarMenor(const pmonticulo m);
 void imprimirMonticulo(const pmonticulo m);
 void crearVectorPrueba(int v[], int tam);
 void testProbarFunciones();
-void testOrdenarMonticulo();
 void ascendente(int v[], int n);
 void descendente(int v[], int n);
 void aleatorio(int v[], int n);
-void OrdenarPorMontículos();
+/*void OrdenarPorMontículos();
 void tablaComplejidadAleatorio();
 void tablaComplejidadAscendente();
 void tablaComplejidadDescendente();
 void tablaComplejidadCrearMonticulo();
 void tablaComplejidadInsertarMonticulo();
-void printVector(int v[], int n);
+void printVector(int v[], int n);*/
 void testOrdenarMonticulo(void (*algoritmo)(int[], int),int *vector, int tamV);
 
 //FUNCIÓN INICIALIZAR SEMILLA
@@ -120,13 +119,13 @@ void hundir(pmonticulo m, int i){
         hijoizq = 2*i+1;
         hijoder = 2*i+2;
         j = i;
-        if (hijoder <= m ->ultimo && m->vector[hijoder] > m->vector[i]){
+        if (hijoder <= m ->ultimo && m->vector[hijoder] < m->vector[i]){
             i = hijoder;
         }
-        if (hijoizq <= m ->ultimo && m->vector[hijoizq] > m->vector[i]){
+        if (hijoizq <= m ->ultimo && m->vector[hijoizq] < m->vector[i]){
             i = hijoizq;
         }
-        intercambiar(&m->vector[j], &m->vector[i]);
+        intercambiar(&m->vector[i], &m->vector[j]);
     }while(j!=i);
 } 
 
@@ -152,11 +151,7 @@ int consultarMenor(const pmonticulo m) {
         printf("Error: Montículo vacío\n");
         return -1;  
     }
-    int i, menor = m->vector[m->ultimo/2];
-    for (i = m->ultimo/2; i <= m->ultimo; i++){
-        if (m->vector[i] < menor) menor = m->vector[i];
-    }
-    return menor;  
+    return m->vector[0];  
 }
 
 
@@ -175,13 +170,13 @@ void crearVectorPrueba(int v[], int tam) {
     v[0]=1;
     v[1]=2;
     v[2]=3;
-    v[3]=4;
+    v[3]=25;
     v[4]=5;
     v[5]=6;
     v[6]=7;
     v[7]=8;
-    v[8]=9;
-    v[9]=10;
+    v[8]=83;
+    v[9]=17;
     v[10]=11;
     v[11]=12;
 
@@ -231,7 +226,7 @@ void testOrdenarMonticulo(void (*algoritmo)(int[], int), int *vector, int tamV) 
 
 //ORDENACIÓN MONTICULOS
 
-void ordenarPorMonticulos(){
+/*void ordenarPorMonticulos(){
     int i;
     crearMonticulo(m,v,n);
     for(i=0; i<n; i++){
@@ -239,13 +234,13 @@ void ordenarPorMonticulos(){
         quitarMenor(m);
 
     }
-}
+}*/
 
 
 //FUNCION ASCENDENTE, DESCENDENTE Y ALEATORIO
 
 void ascendente(int v[], int n){
- int i;
+    int i;
     for (i = 0; i < n; i++) {
         v[i] = i;
     }
@@ -253,7 +248,7 @@ void ascendente(int v[], int n){
 
 
 void descendente(int v[], int n){
-  int i;
+    int i;
     for (i = n; i > 0; --i) {
         v[n - i] = i - 1;
     }
@@ -316,9 +311,9 @@ void tablaComplejidadInsertarMonticulo(){
     for (n = 500; n <= K; n = n * 2) {
         tiempo = tiempos(ascendente,insertarMonticulo,n);
         printf("%10d    \t|%14.3f\t|%14.8f\n",
-               n, tiempo, tiempo/n);
+                n, tiempo, tiempo/n);
 
-   }
+}
 
 
 void tablaComplejidadCrearMonticulo(){
@@ -330,16 +325,16 @@ void tablaComplejidadCrearMonticulo(){
     for (n = 500; n <= K; n = n * 2) {
         tiempo = tiempos(ascendente,crearMonticulo,n);
         printf("%10d    \t|%14.3f\t|%14.8f\n",
-               n, tiempo, tiempo/n);
+                n, tiempo, tiempo/n);
 
 }
 
 void tablaComplejidadAscendente(){
-  double t;
-  int i;
+    double t;
+    int i;
 
     printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t           t(n)/n"
-             "   t(n)/(n*log(n))\n");
+            "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=K; i*=2) {
 
@@ -359,11 +354,11 @@ void tablaComplejidadAscendente(){
 }
 
 void tablaComplejidadDescendente(){
-  double t;
-  int i;
+    double t;
+    int i;
 
     printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t           t(n)/n"
-             "   t(n)/(n*log(n))\n");
+            "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=K; i*=2) {
 
@@ -381,11 +376,11 @@ void tablaComplejidadDescendente(){
 }
 
 void tablaComplejidadAleatorio(){
- double t;
-  int i;
+    double t;
+    int i;
 
     printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t           t(n)/n"
-             "   t(n)/(n*log(n))\n");
+            "   t(n)/(n*log(n))\n");
 
     for (i = 125; i <=K; i*=2) {
 
@@ -400,7 +395,7 @@ void tablaComplejidadAleatorio(){
         }
     }
 
-}
+}*/
 
 
 
@@ -413,7 +408,7 @@ int main() {
 
     // Test de las funciones de montículos
     testProbarFunciones();
-
+/*
     // Crear tablas de complejidad
     tablaComplejidadCrearMonticulo();
     tablaComplejidadInsertarMonticulo();
@@ -440,7 +435,7 @@ int main() {
     aleatorio(aleat, tamV);
     testOrdenarMonticulo(aleatorio, aleat, tamV);
     tablaComplejidadAleatorio();
-    free(aleat);
+    free(aleat);*/
 
     return 0;
 
