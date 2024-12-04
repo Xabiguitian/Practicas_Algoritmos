@@ -9,6 +9,7 @@
 //DEFINICIÓN DE CONSTANTES
 
 #define TAM 256000
+#define K 1000
 
 //DEFINICIÓN DE STRUCTS Y TYPEDEFS
 struct monticulo {
@@ -21,7 +22,7 @@ typedef struct monticulo * pmonticulo;
 //DEFINICIÓN DE LAS FUNCIONES
 void inicializar_semilla();
 double microsegundos();
-double tiempos(void (*algoritmo)(int[], int), void (*inicializa) (int [],int), int tam);
+double tiempos(void (*algoritmo)(int[], int), void (*inicializa) (pmonticulo, int [], int), int tam, pmonticulo m);
 void iniMonticulo(pmonticulo m);
 void crearMonticulo(pmonticulo m, int v [], int n);
 void intercambiar(int *a, int *b);
@@ -36,13 +37,13 @@ void testProbarFunciones();
 void ascendente(int v[], int n);
 void descendente(int v[], int n);
 void aleatorio(int v[], int n);
-/*void OrdenarPorMontículos();
+void OrdenarPorMontículos();
 void tablaComplejidadAleatorio();
 void tablaComplejidadAscendente();
 void tablaComplejidadDescendente();
 void tablaComplejidadCrearMonticulo();
 void tablaComplejidadInsertarMonticulo();
-void printVector(int v[], int n);*/
+void printVector(int v[], int n);
 void testOrdenarMonticulo(void (*algoritmo)(int[], int),int *vector, int tamV);
 
 //FUNCIÓN INICIALIZAR SEMILLA
@@ -226,15 +227,14 @@ void testOrdenarMonticulo(void (*algoritmo)(int[], int), int *vector, int tamV) 
 
 //ORDENACIÓN MONTICULOS
 
-/*void ordenarPorMonticulos(){
-    int i;
-    crearMonticulo(m,v,n);
-    for(i=0; i<n; i++){
+void ordenarPorMonticulos(pmonticulo m, int v[]){
+    int i, j = m->ultimo;
+    for(i=0; i <= j; i++){
         v[i]=consultarMenor(m);
         quitarMenor(m);
 
     }
-}*/
+}
 
 
 //FUNCION ASCENDENTE, DESCENDENTE Y ALEATORIO
@@ -266,15 +266,15 @@ void aleatorio(int v[], int n){
 
 //FUNCION DE TIEMPOS
 
-/*double tiempos(void (*algoritmo)(int[], int), void (*inicializa) (int [],int), int tam){
+double tiempos(void (*algoritmo)(int[], int), void (*inicializa) (pmonticulo, int [], int), int tam, pmonticulo m){
 
-    double t1, t,t2,aux;
+    double t1, t, t2, aux;
     int *v;
     int i;
 
 
     v= malloc(tam *sizeof(int));
-    inicializa(v, tam);
+    inicializa(m, v, tam);
 
     t1=microsegundos();
     algoritmo(v,tam);
@@ -283,14 +283,14 @@ void aleatorio(int v[], int n){
     if(t<500){
         t1=microsegundos();
         for(i=0;i<K;i++){
-            inicializa(v,tam);
+            inicializa(m, v, tam);
             algoritmo(v,tam);
         }
         t2=microsegundos();
         aux=t2-t1;
         t1=microsegundos();
         for(i=0;i<K;i++){
-            inicializa(v,tam);
+            inicializa(m, v, tam);
         }
         t2=microsegundos();
         t=t2-t1;
@@ -306,13 +306,17 @@ return t;
 //IMPRIMIR TABLAS DE COMPLEJIDAD
 
 void tablaComplejidadInsertarMonticulo(){
+    int n;
+    double tiempo;
+
     printf("\n Inserción de Montículos\n");
     printf("\n\n\t  N\t\t t(n) \t    O(n*log(n)) \n");
     for (n = 500; n <= K; n = n * 2) {
-        tiempo = tiempos(ascendente,insertarMonticulo,n);
+        tiempo = tiempos(ascendente,insertarMonticulo,n,m);
         printf("%10d    \t|%14.3f\t|%14.8f\n",
                 n, tiempo, tiempo/n);
 
+    }
 }
 
 
@@ -323,10 +327,11 @@ void tablaComplejidadCrearMonticulo(){
     printf("\n Creacion de Monticulos\n");
     printf("\n\n\t  N\t\t t(n) \t    O(n) \n");
     for (n = 500; n <= K; n = n * 2) {
-        tiempo = tiempos(ascendente,crearMonticulo,n);
+        tiempo = tiempos(ascendente,crearMonticulo,n,m);
         printf("%10d    \t|%14.3f\t|%14.8f\n",
                 n, tiempo, tiempo/n);
 
+    }
 }
 
 void tablaComplejidadAscendente(){
@@ -338,7 +343,7 @@ void tablaComplejidadAscendente(){
 
     for (i = 125; i <=K; i*=2) {
 
-        t = tiempo(ordenarPorMonticulos,ascendente,i);
+        t = tiempos(ascendente,ordenarPorMonticulos,i,m);
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
@@ -362,7 +367,7 @@ void tablaComplejidadDescendente(){
 
     for (i = 125; i <=K; i*=2) {
 
-        t = tiempo(ordenarPorMonticulos,descendente,i);
+        t = tiempos(descendente,ordenarPorMonticulos,i,m);
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
@@ -384,7 +389,7 @@ void tablaComplejidadAleatorio(){
 
     for (i = 125; i <=K; i*=2) {
 
-        t = tiempo(ordenarPorMonticulos,aleatorio,i);
+        t = tiempos(aleatorio,ordenarPorMonticulos,i,m);
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
@@ -395,7 +400,7 @@ void tablaComplejidadAleatorio(){
         }
     }
 
-}*/
+}
 
 
 
@@ -408,7 +413,7 @@ int main() {
 
     // Test de las funciones de montículos
     testProbarFunciones();
-/*
+
     // Crear tablas de complejidad
     tablaComplejidadCrearMonticulo();
     tablaComplejidadInsertarMonticulo();
@@ -435,7 +440,7 @@ int main() {
     aleatorio(aleat, tamV);
     testOrdenarMonticulo(aleatorio, aleat, tamV);
     tablaComplejidadAleatorio();
-    free(aleat);*/
+    free(aleat);
 
     return 0;
 
