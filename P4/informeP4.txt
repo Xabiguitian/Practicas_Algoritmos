@@ -3,7 +3,11 @@
 Informe de la práctica 3: Montículos
 
 1.INTRODUCCIÓN
+En esta práctica se implementan las operaciones básicas sobre montículos de mínimos, una estructura de datos eficiente para la gestión de prioridades y la ordenación. Además, se utiliza esta estructura para desarrollar el algoritmo de ordenación por montículos (HeapSort) y se analiza empíricamente su complejidad en diferentes escenarios: vectores ordenados, desordenados y en orden inverso. Los resultados obtenidos permiten comparar el rendimiento de HeapSort con otros algoritmos de ordenación estudiados previamente, validando las propiedades teóricas de los montículos.
+
 2.UNIDADES DE MEDIDA
+	Los tiempos se expresarán en microsegundos.
+
 3.CARACTERÍSTICAS DE LA MÁQUINA
 3.MÉTODO
 4.MEDICIÓN DE LOS TIEMPOS DE EJECUCIÓN
