@@ -133,6 +133,7 @@ double tiemposInsertar(void (*algo)(pmonticulo, int),void (*inicializa)(int [], 
     double t1, t, t2, aux;
     int *v;
     int i;
+    pmonticulo m = malloc(sizeof(struct monticulo));
 
 
     v= malloc(tam *sizeof(int));
@@ -140,14 +141,14 @@ double tiemposInsertar(void (*algo)(pmonticulo, int),void (*inicializa)(int [], 
 
 
     t1=microsegundos();
-    algo(v,tam);
+    algo(m,i);
     t2=microsegundos();
     t=t2-t1;
     if(t<500){
         t1=microsegundos();
         for(i=0;i<K;i++){
             inicializa(v, tam);
-            algo(v,tam);
+            algo(m,i);
         }
         t2=microsegundos();
         aux=t2-t1;
@@ -160,30 +161,31 @@ double tiemposInsertar(void (*algo)(pmonticulo, int),void (*inicializa)(int [], 
         t=(aux-t)/K;
     }
     free (v);
+    free(m);
     return t;
-    
+
 }
 
 
 //FUNCION DE TIEMPOS DE CREAR
-double tiemposCrear(void (*algorit)(pmonticulo, int, int),void (*inicializa)(int [], int), int tam) {
+double tiemposCrear(void (*algorit)(pmonticulo, int[], int),void (*inicializa)(int [], int), int tam) {
     double t1, t, t2, aux;
     int *v;
     int i;
-    pmonticulo
+    pmonticulo m = malloc(sizeof(struct monticulo));
     v= malloc(tam *sizeof(int));
     inicializa(v, tam);
 
 
     t1=microsegundos();
-    algorit(v,tam);
+    algorit(m,v,tam);
     t2=microsegundos();
     t=t2-t1;
     if(t<500){
         t1=microsegundos();
         for(i=0;i<K;i++){
             inicializa(v, tam);
-            algorit(v,tam);
+            algorit(m,v,tam);
         }
         t2=microsegundos();
         aux=t2-t1;
@@ -198,7 +200,7 @@ double tiemposCrear(void (*algorit)(pmonticulo, int, int),void (*inicializa)(int
     free (v);
     return t;
 
-    
+
 }
 
 //FUNCION DE TIEMPOS DE ORDENACION
@@ -249,7 +251,7 @@ void tablaComplejidadCrearMonticulo() {
         asc = malloc(i*sizeof(int));
         ascendente(asc, i);
 
-        t = tiempos(crearMonticulo,ascendente,i);
+        t = tiemposCrear(crearMonticulo,ascendente,i);
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
@@ -266,6 +268,7 @@ void tablaComplejidadCrearMonticulo() {
 void tablaComplejidadInsertarMonticulo() {
     double t;
     int i, *asc;
+    pmonticulo m = malloc(sizeof(struct monticulo));
     printf("TABLA COMPLEJIDAD INSERTAR MONTÍCULO\n");
     printf("\n\n\t  n\t\t t(n) \t    t(n)/n\t       t(n)/n*log(n)"
         "  t(n)/n^2\n");
@@ -285,6 +288,7 @@ void tablaComplejidadInsertarMonticulo() {
         }
     }
     free(asc);
+    free(m);
 
 
 
@@ -384,6 +388,14 @@ int main() {
 
     printf("Test\n");
     test();
+
+    printf("Tiempos insertar\n");
+
+    tablaComplejidadInsertarMonticulo();
+
+    printf("Tiempos crear\n");
+    
+    tablaComplejidadCrearMonticulo();
 
     printf("Tiempos ordenación\n");
 
