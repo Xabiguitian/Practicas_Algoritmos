@@ -1,3 +1,4 @@
+
 //
 // Created by angela on 5/12/24.
 //
@@ -11,17 +12,13 @@ void iniMonticulo(pmonticulo m) {
 
 //FUNCIÓN AUXILIAR PARA FLOTAR
 
-void intercambiar(int *a, int *b){
+void flotar(pmonticulo m, int i) {
     int aux;
-    aux = *a;
-    *a = *b;
-    *b = aux;
-}
+    while (i > 0 && m->vector[i / 2] > m->vector[i]) {
+        aux = m->vector[i / 2];
+        m->vector[i / 2] = m->vector[i];
+        m->vector[i] = aux;
 
-void flotar(pmonticulo M, int i) {
-    while (i > 1 && M->vector[i / 2] < M->vector[i]) {
-
-        intercambiar(&M->vector[i/2], &M->vector[i]);
         i = i / 2;
     }
 }
@@ -32,10 +29,10 @@ void hundir(pmonticulo m, int i){
         hijoizq = 2*i+1;
         hijoder = 2*i+2;
         j = i;
-        if (hijoder <= m ->ultimo && m->vector[hijoder] < m->vector[i]){
+        if (hijoder -1<= m ->ultimo && m->vector[hijoder] < m->vector[i]){
             i = hijoder;
         }
-        if (hijoizq <= m ->ultimo && m->vector[hijoizq] < m->vector[i]){
+        if (hijoizq-1 <= m ->ultimo && m->vector[hijoizq] < m->vector[i]){
             i = hijoizq;
         }
 
@@ -48,7 +45,7 @@ void hundir(pmonticulo m, int i){
 void insertarMonticulo(pmonticulo m, int x) {
     if (m->ultimo >= TAM)
     {
-        perror("Montículo lleno");
+        printf("Error: Montículo lleno\n");
     }else{
         m->ultimo += 1;
         m->vector[m->ultimo] = x;
@@ -88,6 +85,3 @@ void crearMonticulo(pmonticulo m, int v [], int n) {
         hundir(m, i);
     }
 }
-
-
-

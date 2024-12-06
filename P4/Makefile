@@ -3,5 +3,5 @@ all: monticulo.c p4.c
 	./a.out
 
 leaks:
-	gcc -g -O0 -Wall p4.c monticulo.c
-	valgrind
+	gcc -g -O0 -Wall p4.c monticulo.c -lm
+	valgrind --leak-check=full --show-reachable=yes --track-origins=yes ./a.out

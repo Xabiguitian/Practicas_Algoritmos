@@ -61,8 +61,9 @@ void ordenarPorMonticulos(int v[], int n){
 
 void test() {
     pmonticulo m = malloc(sizeof(struct monticulo));
-    int tam = 12, menor = 0;
+    int tam = 12, menor=0;
     int v[tam];
+    int nuevosValores[] = {13, 0, 15};
     //printf("hola");
     v[0]=8;
     v[1]=9;
@@ -93,9 +94,19 @@ void test() {
     quitarMenor(m);
     imprimirMonticulo(m);
 
+    printf("Test insertarMonticulo\n");
+
+    for (int i = 0; i < 3; i++) {
+        printf("Insertando %d en el montículo...\n", nuevosValores[i]);
+        insertarMonticulo(m, nuevosValores[i]);
+        imprimirMonticulo(m);
+        printf("\n");
+    }
+
     printf("Ordenación\n");
     ordenarPorMonticulos(v, tam);
     printVector(v, tam);
+
 
     free(m);
 }
@@ -132,8 +143,9 @@ void aleatorio(int v[], int n){
 double tiemposInsertar(void (*algo)(pmonticulo, int),void (*inicializa)(int [], int), int tam) {
     double t1, t, t2, aux;
     int *v;
-    int i;
+    int i,j;
     pmonticulo m = malloc(sizeof(struct monticulo));
+    iniMonticulo(m);
 
 
     v= malloc(tam *sizeof(int));
@@ -141,20 +153,27 @@ double tiemposInsertar(void (*algo)(pmonticulo, int),void (*inicializa)(int [], 
 
 
     t1=microsegundos();
-    algo(m,i);
+    for(i=0; i<=tam; i++){
+        algo(m,v[i]);
+    }
+    
     t2=microsegundos();
     t=t2-t1;
     if(t<500){
         t1=microsegundos();
         for(i=0;i<K;i++){
             inicializa(v, tam);
-            algo(m,i);
+            iniMonticulo(m);
+            for(j=0; j<=tam; j++){
+                algo(m,v[i]);
+            }
         }
         t2=microsegundos();
         aux=t2-t1;
         t1=microsegundos();
         for(i=0;i<K;i++){
             inicializa(v, tam);
+            iniMonticulo(m);
         }
         t2=microsegundos();
         t=t2-t1;
@@ -276,6 +295,7 @@ void tablaComplejidadInsertarMonticulo() {
         asc = malloc(i*sizeof(int));
         ascendente(asc, i);
 
+
         t = tiemposInsertar(insertarMonticulo,ascendente,i);
         if (t<500)
         {
@@ -394,7 +414,7 @@ int main() {
     tablaComplejidadInsertarMonticulo();
 
     printf("Tiempos crear\n");
-    
+
     tablaComplejidadCrearMonticulo();
 
     printf("Tiempos ordenación\n");
