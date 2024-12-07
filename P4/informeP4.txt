@@ -3,12 +3,53 @@
 Informe de la práctica 3: Montículos
 
 1.INTRODUCCIÓN
-En esta práctica se implementan las operaciones básicas sobre montículos de mínimos, una estructura de datos eficiente para la gestión de prioridades y la ordenación. Además, se utiliza esta estructura para desarrollar el algoritmo de ordenación por montículos (HeapSort) y se analiza empíricamente su complejidad en diferentes escenarios: vectores ordenados, desordenados y en orden inverso. Los resultados obtenidos permiten comparar el rendimiento de HeapSort con otros algoritmos de ordenación estudiados previamente, validando las propiedades teóricas de los montículos.
+En esta práctica se implementan las operaciones básicas sobre montículos de mínimos, una estructura de datos eficiente para la gestión de prioridades y la ordenación. Además, se utiliza esta estructura para desarrollar el algoritmo de ordenación por montículos (HeapSort) y se analiza empíricamente su complejidad en diferentes escenarios: vectores ordenados, desordenados y en orden inverso. Los resultados obtenidos permiten comparar el rendimiento de ordenación por montículos con otros algoritmos de ordenación estudiados previamente.
 
 2.UNIDADES DE MEDIDA
 	Los tiempos se expresarán en microsegundos.
 
 3.CARACTERÍSTICAS DE LA MÁQUINA
+   Marca: Micro-Star International Co., Ltd.
+   OS: Ubuntu 24.04.1 LTS
+   Kernel:  6.8.0-47-generic
+   CPU: AMD Ryzen 5 3600 6-Core Processor
+   Memoria Principal: 32,0 GiB
+
+
 3.MÉTODO
+Implementamos las operaciones básicas sobre montículos de mínimos según las especificaciones, incluyendo la inicialización, inserción, eliminación del menor, consulta del mínimo y creación de un montículo desde un vector. Para verificar su correcto funcionamiento, desarrollamos una función de prueba que incluye también la ordenación por montículos. Esto permitió comprobar que todas las funciones, tanto individuales como integradas en el algoritmo, operan correctamente en diferentes casos: vectores ordenados ascendentemente, descendentemente y aleatorios.
+
+Test
+Test crearMonticulo 
+   8   9  12   2  10   3   7   4   1  11   5   6
+
+Montículo creado
+1 2 3 4 5 6 7 8 9 11 10 12 
+
+El menor es 1
+2 4 3 8 5 6 7 12 9 11 10 
+Test insertarMonticulo
+Insertando 13 en el montículo...
+2 4 3 8 5 6 7 12 9 11 10 13 
+
+Insertando 0 en el montículo...
+0 2 3 4 5 6 8 12 9 11 10 13 7 
+
+Insertando 15 en el montículo...
+0 2 3 4 5 6 8 12 9 11 10 13 7 15 
+
+Ordenación
+   1   2   3   4   5   6   7   8   9  10  11  12
+
+
 4.MEDICIÓN DE LOS TIEMPOS DE EJECUCIÓN
+Medimos los tiempos de ejecución de las funciones insertar con un vector ascendente, crearMonticulo con el mismo tipo de vector, y la función de ordenación por montículos para vectores en tres configuraciones: ascendente, descendente y aleatoria. El objetivo es analizar la complejidad computacional de las tres funciones y comprobar que las dos primeras tienen complejidades O(nlog⁡n)O(nlogn) y O(n)O(n), respectivamente.
+Se indican las mediciones anómalas (#) y los tiempos en los que se realizan menos de 500 iteraciones (*). También se calculan las cotas subestimada, sobrestimada y ajustada para evaluar la relación entre los tiempos medidos y las complejidades teóricas.
+
+
 5.CONCLUSIÓN
+En esta práctica comparamos las complejidades computacionales del algoritmo de ordenación por montículos con los algoritmos de ordenación por inserción y ordenación rápida (QuickSort), analizando su rendimiento en tres configuraciones iniciales del vector: orden ascendente, orden descendente y desorden aleatorio.
+
+Para un vector ascendente, la ordenación por inserción es más eficiente (O(n)O(n)), mientras que QuickSort y la ordenación por montículos mantienen su complejidad promedio (O(nlog⁡n)O(nlogn)). En cambio, con un vector descendente, tanto la ordenación por inserción como QuickSort experimentan su peor caso (O(n2)O(n2)), mientras que la ordenación por montículos sigue comportándose como O(nlog⁡n)O(nlogn). Para un vector desordenado, QuickSort y la ordenación por montículos tienen su comportamiento promedio (O(nlog⁡n)O(nlogn)), mientras que la ordenación por inserción es menos eficiente (O(n2)O(n2)).
+
+Los tiempos medidos para distintos tamaños de nn confirman estas complejidades, destacando la consistencia de la ordenación por montículos frente a diferentes configuraciones iniciales.
