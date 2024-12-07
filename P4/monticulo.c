@@ -1,4 +1,3 @@
-
 //
 // Created by angela on 5/12/24.
 //
@@ -14,7 +13,7 @@ void iniMonticulo(pmonticulo m) {
 
 void flotar(pmonticulo m, int i) {
     int aux;
-    while (i > 0 && m->vector[i / 2] > m->vector[i]) {
+   while (i > 0 && m->vector[i / 2] > m->vector[i]) {
         aux = m->vector[i / 2];
         m->vector[i / 2] = m->vector[i];
         m->vector[i] = aux;
@@ -29,10 +28,10 @@ void hundir(pmonticulo m, int i){
         hijoizq = 2*i+1;
         hijoder = 2*i+2;
         j = i;
-        if (hijoder -1<= m ->ultimo && m->vector[hijoder] < m->vector[i]){
+        if (hijoder <= m ->ultimo && m->vector[hijoder] < m->vector[i]){
             i = hijoder;
         }
-        if (hijoizq-1 <= m ->ultimo && m->vector[hijoizq] < m->vector[i]){
+        if (hijoizq <= m ->ultimo && m->vector[hijoizq] < m->vector[i]){
             i = hijoizq;
         }
 
@@ -45,7 +44,7 @@ void hundir(pmonticulo m, int i){
 void insertarMonticulo(pmonticulo m, int x) {
     if (m->ultimo >= TAM)
     {
-        printf("Error: Montículo lleno\n");
+        perror("Montículo lleno");
     }else{
         m->ultimo += 1;
         m->vector[m->ultimo] = x;
@@ -85,3 +84,6 @@ void crearMonticulo(pmonticulo m, int v [], int n) {
         hundir(m, i);
     }
 }
+
+
+
