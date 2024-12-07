@@ -1,9 +1,15 @@
 Ángela Garcia Sánchez: angela.gsanchez@udc.es y Xabier Guitián López: x.guitian@udc.es
 
-Informe de la práctica 3: Montículos
+Informe de la práctica 4: Montículos
 
 1.INTRODUCCIÓN
-En esta práctica se implementan las operaciones básicas sobre montículos de mínimos, una estructura de datos eficiente para la gestión de prioridades y la ordenación. Además, se utiliza esta estructura para desarrollar el algoritmo de ordenación por montículos (HeapSort) y se analiza empíricamente su complejidad en diferentes escenarios: vectores ordenados, desordenados y en orden inverso. Los resultados obtenidos permiten comparar el rendimiento de ordenación por montículos con otros algoritmos de ordenación estudiados previamente.
+En esta práctica se implementan las operaciones básicas sobre montículos de mínimos, 
+una estructura de datos eficiente para la gestión de prioridades y la ordenación. 
+Además, se utiliza esta estructura para desarrollar el algoritmo de ordenación 
+por montículos (HeapSort) y se analiza empíricamente su complejidad en diferentes escenarios:
+vectores ordenados, desordenados y en orden inverso. 
+Los resultados obtenidos permiten comparar el rendimiento de ordenación por montículos
+ con otros algoritmos de ordenación estudiados previamente.
 
 2.UNIDADES DE MEDIDA
 	Los tiempos se expresarán en microsegundos.
@@ -17,7 +23,13 @@ En esta práctica se implementan las operaciones básicas sobre montículos de m
 
 
 3.MÉTODO
-Implementamos las operaciones básicas sobre montículos de mínimos según las especificaciones, incluyendo la inicialización, inserción, eliminación del menor, consulta del mínimo y creación de un montículo desde un vector. Para verificar su correcto funcionamiento, desarrollamos una función de prueba que incluye también la ordenación por montículos. Esto permitió comprobar que todas las funciones, tanto individuales como integradas en el algoritmo, operan correctamente en diferentes casos: vectores ordenados ascendentemente, descendentemente y aleatorios.
+Implementamos las operaciones básicas sobre montículos de mínimos según las especificaciones,
+ incluyendo la inicialización, inserción, eliminación del menor, consulta del mínimo y 
+ creación de un montículo desde un vector. Para verificar su correcto funcionamiento, 
+ desarrollamos una función de prueba que incluye también la ordenación por montículos.
+  Esto permitió comprobar que todas las funciones, tanto individuales como integradas
+  en el algoritmo, operan correctamente en diferentes casos: vectores ordenados ascendentemente, 
+ descendentemente y aleatorios.
 
 Test
 Test crearMonticulo 
@@ -43,8 +55,14 @@ Ordenación
 
 
 4.MEDICIÓN DE LOS TIEMPOS DE EJECUCIÓN
-Medimos los tiempos de ejecución de las funciones insertar con un vector ascendente, crearMonticulo con el mismo tipo de vector, y la función de ordenación por montículos para vectores en tres configuraciones: ascendente, descendente y aleatoria. El objetivo es analizar la complejidad computacional de las tres funciones y comprobar que las dos primeras tienen complejidades O(nlog⁡n)O(nlogn) y O(n)O(n), respectivamente.
-Se indican las mediciones anómalas (#) y los tiempos en los que se realizan menos de 500 iteraciones (*). También se calculan las cotas subestimada, sobrestimada y ajustada para evaluar la relación entre los tiempos medidos y las complejidades teóricas.
+Medimos los tiempos de ejecución de las funciones insertar con un vector ascendente, 
+crearMonticulo con el mismo tipo de vector, y la función de ordenación por montículos
+para vectores en tres configuraciones: ascendente, descendente y aleatoria. 
+El objetivo es analizar la complejidad computacional de las tres funciones y comprobar 
+que las dos primeras tienen complejidades O(nlog⁡n)O(nlogn) y O(n)O(n), respectivamente.
+Se indican las mediciones anómalas (#) y los tiempos en los que se realizan menos 
+de 500 iteraciones (*). También se calculan las cotas subestimada, sobrestimada y 
+ajustada para evaluar la relación entre los tiempos medidos y las complejidades teóricas.
 
 Test
 Test crearMonticulo 
@@ -71,70 +89,122 @@ Tiempos insertar
 TABLA COMPLEJIDAD INSERTAR MONTÍCULO
 
 
-	  n		 t(n) 	     t(n)/n^0.8	    t(n)/n*log(n) 	 t(n)/n^1.1
-(*)     125             1.241          0.026076          0.002056          0.006126
-(*)     250             2.503          0.030207          0.001813          0.005764
+	      n		         t(n) 	      t(n)/n^0.8	    t(n)/n*log(n) 	 t(n)/n^1.1
+(*)     125             1.241          0.026076          0.002056          0.006126 #
+(*)     250             2.503          0.030207          0.001813          0.005764 #
 (*)     500             2.964          0.020545          0.000954          0.003184
 (*)    1000             5.894          0.023464          0.000853          0.002954
 (*)    2000            11.728          0.026816          0.000771          0.002742
 (*)    4000            23.498          0.030859          0.000708          0.002563
 (*)    8000            47.130          0.035549          0.000656          0.002398
-(*)   16000            94.129          0.040778          0.000608          0.002235
+(*)   16000            94.129          0.040778          0.000608          0.002235 #
+
+ Cota subestimada: n^0.8
+ Cota constante:   n*log(n)
+ Cota sobrestimada:n^1.1
+
+
+
 Tiempos crear
 TABLA COMPLEJIDAD CREAR MONTÍCULO
 
-	  n		 t(n) 	    t(n)/n^0.95		   t(n)/n	 t(n)/n^1.2
+	      n		         t(n) 	     t(n)/n^0.95		   t(n)/n	     t(n)/n^1.2
 (*)     125             0.697          0.007099          0.005576          0.002123
-(*)     250             1.425          0.007512          0.005700          0.001889
+(*)     250             1.425          0.007512          0.005700          0.001889 #
 (*)     500             2.758          0.007526          0.005516          0.001592
 (*)    1000             5.540          0.007825          0.005540          0.001392
 (*)    2000            11.019          0.008057          0.005509          0.001205
 (*)    4000            22.096          0.008363          0.005524          0.001052
 (*)    8000            43.851          0.008591          0.005481          0.000908
-(*)   16000            86.402          0.008762          0.005400          0.000779
+(*)   16000            86.402          0.008762          0.005400          0.000779 #
+
+ Cota subestimada: n^0.95
+ Cota constante:   n
+ Cota sobrestimada:n^1.2
+
+
+
+
 Tiempos ordenación
 
 TABLA COMPLEJIDAD ALEATORIA
 
-	  n		 t(n) 		 (n)/n	    t(n)/n*log(n)	 t(n)/n^1.2
+	      n		         t(n) 		      (n)/n	     t(n)/n*log(n)	     t(n)/n^1.2
 (*)     125             9.403          0.075224          0.015580          0.028640
 (*)     250            21.218          0.084872          0.015371          0.028130
 (*)     500            47.465          0.094930          0.015275          0.027391
 (*)    1000           104.349          0.104349          0.015106          0.026211
-(*)    2000           226.978          0.113489          0.014931          0.024817
+(*)    2000           226.978          0.113489          0.014931          0.024817 #
        4000           504.000          0.126000          0.015192          0.023986
        8000          1087.000          0.135875          0.015119          0.022518
-      16000          2244.000          0.140250          0.014488          0.020234
+      16000          2244.000          0.140250          0.014488          0.020234 #
+
+
+ Cota subestimada: n
+ Cota constante:   n*log(n)
+ Cota sobrestimada:n^1.2
+
+
+
+
+
 
 TABLA COMPLEJIDAD DESCENDENTE
 
-	  n		 t(n) 		 t(n)/n t(n)/n^1.1*log(n)	 t(n)/n^1.3
+	      n		         t(n) 		     t(n)/n   t(n)/n^1.1*log(n)	     t(n)/n^1.3
 (*)     125             5.469          0.043752          0.005591          0.010278
 (*)     250            12.188          0.048752          0.005083          0.009303
-(*)     500            28.495          0.056990          0.004926          0.008833
+(*)     500            28.495          0.056990          0.004926          0.008833 #
 (*)    1000            72.554          0.072554          0.005264          0.009134
 (*)    2000           178.641          0.089320          0.005495          0.009134
 (*)    4000           389.903          0.097476          0.005128          0.008096
-       8000           821.000          0.102625          0.004649          0.006924
-      16000          1732.000          0.108250          0.004247          0.005932
+       8000           821.000          0.102625          0.004649          0.006924 #
+      16000          1732.000          0.108250          0.004247          0.005932 #
+
+ Cota subestimada: n
+ Cota constante:   n^1.1*log(n)
+ Cota sobrestimada:n^1.3
+
+
+
+
 
 TABLA COMPLEJIDAD ASCENDENTE
 
 
-	  n		 t(n) 		 t(n)/n t(n)/n^1.1*log(n)	 t(n)/n^1.3
+	      n		          t(n) 		     t(n)/n   t(n)/n^1.1*log(n)	     t(n)/n^1.3
 (*)     125             4.689          0.037512          0.004794          0.008812
 (*)     250            10.538          0.042152          0.004395          0.008043
 (*)     500            24.611          0.049222          0.004254          0.007629
 (*)    1000            67.001          0.067001          0.004861          0.008435
-(*)    2000           171.819          0.085909          0.005285          0.008785
-(*)    4000           377.561          0.094390          0.004965          0.007840
+(*)    2000           171.819          0.085909          0.005285          0.008785 #
+(*)    4000           377.561          0.094390          0.004965          0.007840 #
        8000           805.000          0.100625          0.004558          0.006789
-      16000          1675.000          0.104688          0.004108          0.005737
+      16000          1675.000          0.104688          0.004108          0.005737 #
+
+
+ Cota subestimada: n
+ Cota constante:   n^1.1*log(n)
+ Cota sobrestimada:n^1.3
+
+
+
+
 
 
 5.CONCLUSIÓN
-En esta práctica comparamos las complejidades computacionales del algoritmo de ordenación por montículos con los algoritmos de ordenación por inserción y ordenación rápida (QuickSort), analizando su rendimiento en tres configuraciones iniciales del vector: orden ascendente, orden descendente y desorden aleatorio.
+En esta práctica comparamos las complejidades computacionales del algoritmo de ordenación por montículos
+con los algoritmos de ordenación por inserción y ordenación rápida (QuickSort), analizando su rendimiento
+en tres configuraciones iniciales del vector: orden ascendente, orden descendente y aleatorio.
 
-Para un vector ascendente, la ordenación por inserción es más eficiente (O(n)O(n)), mientras que QuickSort y la ordenación por montículos mantienen su complejidad promedio (O(nlog⁡n)O(nlogn)). En cambio, con un vector descendente, tanto la ordenación por inserción como QuickSort experimentan su peor caso (O(n2)O(n2)), mientras que la ordenación por montículos sigue comportándose como O(nlog⁡n)O(nlogn). Para un vector desordenado, QuickSort y la ordenación por montículos tienen su comportamiento promedio (O(nlog⁡n)O(nlogn)), mientras que la ordenación por inserción es menos eficiente (O(n2)O(n2)).
+Para un vector ascendente, la ordenación por inserción es más eficiente (O(n)), mientras que QuickSort
+y la ordenación por montículos mantienen su complejidad promedio (O(nlog⁡n)).La creación de un montículo 
+a partir de un vector de n elementos tiene una complejidad (O(n)), lo que la hace más eficiente que 
+realizar n inserciones secuenciales, que requieren (O(nlog⁡n)). En cambio, con un vector descendente, 
+tanto la ordenación por inserción como QuickSort experimentan su peor caso (O(n2)),mientras que la ordenación 
+por montículos sigue comportándose como O(nlog⁡n)O(nlogn). Para un vector desordenado, QuickSort y la 
+ordenación por montículos tienen su comportamiento promedio (O(nlog⁡n)), mientras que la ordenación por inserción
+es menos eficiente (O(n2)).
 
-Los tiempos medidos para distintos tamaños de nn confirman estas complejidades, destacando la consistencia de la ordenación por montículos frente a diferentes configuraciones iniciales.
+Los tiempos medidos para distintos tamaños de n confirman estas complejidades, destacando la consistencia de la 
+ordenación por montículos frente a diferentes configuraciones iniciales.
