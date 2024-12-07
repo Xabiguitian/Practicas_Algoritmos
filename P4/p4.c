@@ -267,7 +267,7 @@ void tablaComplejidadCrearMonticulo() {
     int i;
     printf("TABLA COMPLEJIDAD CREAR MONTÍCULO");
     printf("\n\n\t  n\t\t t(n) \t    t(n)/n^0.95\t       t(n)/n"
-              "  t(n)/n^1.2\n");
+            "\t\tt(n)/n^1.2\n");
 
     for (i = 125; i <=16000; i*=2) {
 
@@ -279,7 +279,7 @@ void tablaComplejidadCrearMonticulo() {
 
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-            i, t, t /( pow(i,0.95)), t /( i), t / (pow( i,1.2)));
+            i, t, t /( pow(i,0.95)), t /(i), t / (pow( i,1.2)));
         }
     }
 
@@ -289,19 +289,19 @@ void tablaComplejidadInsertarMonticulo() {
     double t;
     int i;
     printf("TABLA COMPLEJIDAD INSERTAR MONTÍCULO\n");
-    printf("\n\n\t  n\t\t t(n) \t    t(n)/n\t       t(n)/n*log(n)"
-        "  t(n)/n^2\n");
+    printf("\n\n\t  n\t\t t(n) \t     t(n)/n^0.8\t    t(n)/n*log(n)"
+        " \t t(n)/n^1.1\n");
     for (i = 125; i <=16000; i*=2) {
 
         t = tiemposInsertar(insertarMonticulo,ascendente,i);
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-            i, t, t /(i), t /( i*log(i)), t / (pow( i,2)));
+            i, t, t / (pow( i,0.8)), t /( i*log(i)), t / (pow( i,1.1)));
 
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-            i, t, t /(i), t /( i*log(i)), t / (pow( i,2)));
+            i, t, t / (pow( i,0.8)), t /( i*log(i)), t / (pow( i,2)));
         }
     }
 
@@ -315,8 +315,8 @@ void tablaComplejidadAscendente(){
     int i;
 
     printf("\nTABLA COMPLEJIDAD ASCENDENTE\n");
-    printf("\n\n\t  n\t\t t(n) \t    t(n)/n\t       t(n)/n*log(n)"
-                "  t(n)/n^2\n");
+    printf("\n\n\t  n\t\t t(n) \t    t(n)/n\tt(n)/n^1.1*log(n)"
+                "\t t(n)/n^1.3\n");
 
     for (i = 125; i <=16000; i*=2) {
 
@@ -324,11 +324,11 @@ void tablaComplejidadAscendente(){
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-            i, t, t /(i), t /( (pow(i,1.1))*log(i)), t / (pow( i,2)));
+            i, t, t /(i), t /( (pow(i,1.1))*log(i)), t / (pow( i,1.3)));
 
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-            i, t, t /(i), t /( (pow(i,1.1))*log(i)), t / (pow( i,2)));
+            i, t, t /(i), t /( (pow(i,1.1))*log(i)), t / (pow( i,1.3)));
         }
     }
 }
@@ -339,17 +339,17 @@ void tablaComplejidadDescendente(){
 
     printf("\nTABLA COMPLEJIDAD DESCENDENTE");
     printf("\n\n\t  n\t\t t(n) \t    t(n)/n\t       t(n)/n*log(n)"
-            "  t(n)/n^2\n");
+            "\t t(n)/n^1.3\n");
 
     for (i = 125; i <=16000; i*=2) {
         t = tiempos(ordenarPorMonticulos,descendente,i);
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-            i, t, t /(i), t /( i*log(i)), t / (pow( i,2)));
+            i, t, t /(i), t /( i*log(i)), t / (pow( i,1.3)));
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-            i, t, t /(i), t /( i*log(i)), t / (pow( i,2)));
+            i, t, t /(i), t /( i*log(i)), t / (pow( i,1.3)));
         }
     }
 }
@@ -359,7 +359,7 @@ void tablaComplejidadAleatorio(){
     int i;
     printf("\nTABLA COMPLEJIDAD ALEATORIA");
     printf("\n\n\t  n\t\t t(n) \t    t(n)/n\t       t(n)/n*log(n)"
-                "  t(n)/n^2\n");
+                "\t t(n)/n^1.2\n");
 
     for (i = 125; i <=16000; i*=2) {
 
@@ -367,10 +367,10 @@ void tablaComplejidadAleatorio(){
         if (t<500)
         {
             printf("(*)%8d%18.3f%18.6f%18.6f%18.6f\n",
-            i, t, t /(i), t /( i*log(i)), t / (pow( i,2)));
+            i, t, t /(i), t /( i*log(i)), t / (pow( i,1.2)));
         }else{
             printf("%11d%18.3f%18.6f%18.6f%18.6f\n",
-            i, t, t /(i), t /( i*log(i)), t / (pow( i,2)));
+            i, t, t /(i), t /( i*log(i)), t / (pow( i,1.2)));
         }
     }
 }
