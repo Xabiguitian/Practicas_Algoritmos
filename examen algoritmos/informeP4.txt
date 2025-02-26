@@ -1,0 +1,85 @@
+Xabier Guitián López: x.guitian@udc.es
+
+Informe de la práctica del examen
+
+1.INTRODUCCIÓN
+En esta práctica nos basamos en una práctica anterior (P4) en la que se implementaban las operaciones básicas sobre montículos de mínimos, 
+una estructura de datos eficiente para la gestión de prioridades y la ordenación.
+Para esta práctica en concreto se ha añadido la función k-ésimo mayor que lo que hace es buscar dentro de un vector el k-ésimo valor más grande. 
+Además de implementar esta nueva función también analizamos las complejidades de buscar el 9º elemento mayor y el n/2 elemento mayor.
+
+2.UNIDADES DE MEDIDA
+	Los tiempos se expresarán en microsegundos.
+
+3.CARACTERÍSTICAS DE LA MÁQUINA
+   Marca: Apple
+   OS: MacOS 15.1
+   Kernel:  24.2.0
+   CPU: Apple M1
+   Memoria Principal: 8,0 GiB
+
+
+3.MÉTODO
+Se ha extendido la anterior práctica añadiendole la función k-ésimo Mayor
+
+
+
+
+4.MEDICIÓN DE LOS TIEMPOS DE EJECUCIÓN
+Medimos los tiempos de ejecución de las funciones insertar con un vector ascendente, 
+crearMonticulo con el mismo tipo de vector, y la función de ordenación por montículos
+para vectores en tres configuraciones: ascendente, descendente y aleatoria. 
+El objetivo es analizar la complejidad computacional de las tres funciones y comprobar 
+que las dos primeras tienen complejidades O(nlog⁡n)O(nlogn) y O(n)O(n), respectivamente.
+Se indican las mediciones anómalas (#) y los tiempos en los que se realizan menos 
+de 500 iteraciones (*). También se calculan las cotas subestimada, sobrestimada y 
+ajustada para evaluar la relación entre los tiempos medidos y las complejidades teóricas.
+
+Test
+K-ésimo mayor
+Vector original:   -3  -6 -11  10  -7   3  -5  -5 -10  -9  -9 -10
+Elementos extraídos: 10 3 -3 -5 -5 -6 -7 -9 -9 -10 -10 -11
+
+TABLA COMPLEJIDAD K=9
+
+	       n		          t(n) 	 t(n)/n^0.3*log(n)      t(n)/n^0.5*log(n)	      t(n)/n^0.95
+(*)     125             2.205             0.107285               0.040847          0.022457
+(*)     250             4.758             0.164433               0.054500          0.025083
+(*)     500             8.072             0.201315               0.058087          0.022027
+(*)    1000             9.517             0.173446               0.043568          0.013443
+(*)    2000            10.257             0.137990               0.030175          0.007500
+(*)    4000            13.007             0.130254               0.024796          0.004923
+(*)    8000            23.154             0.173810               0.028804          0.004536
+(*)   16000            44.982             0.254631               0.036736          0.004562
+
+TABLA COMPLEJIDAD K=n/2
+
+	  n		 t(n) 		 t(n)/n	              t(n)/n*log(n)	                  t(n)/n^1.2
+(*)     125             3.830          0.030640          0.006346          0.011666
+(*)     250             8.313          0.033252          0.006022          0.011021
+(*)     500            17.546          0.035092          0.005647          0.010125
+(*)    1000            37.281          0.037281          0.005397          0.009365
+(*)    2000            80.329          0.040164          0.005284          0.008783
+(*)    4000           173.393          0.043348          0.005226          0.008252
+(*)    8000           365.200          0.045650          0.005079          0.007565
+      16000           780.000          0.048750          0.005036          0.007033
+
+
+
+
+5.CONCLUSIÓN
+En esta práctica comparamos las complejidades computacionales del algoritmo de ordenación por montículos
+con los algoritmos de ordenación por inserción y ordenación rápida (QuickSort), analizando su rendimiento
+en tres configuraciones iniciales del vector: orden ascendente, orden descendente y aleatorio.
+
+Para un vector ascendente, la ordenación por inserción es más eficiente (O(n)), mientras que QuickSort
+y la ordenación por montículos mantienen su complejidad promedio (O(nlog⁡n)).La creación de un montículo 
+a partir de un vector de n elementos tiene una complejidad (O(n)), lo que la hace más eficiente que 
+realizar n inserciones secuenciales, que requieren (O(nlog⁡n)). En cambio, con un vector descendente, 
+tanto la ordenación por inserción como QuickSort experimentan su peor caso (O(n2)),mientras que la ordenación 
+por montículos sigue comportándose como O(nlog⁡n)O(nlogn). Para un vector desordenado, QuickSort y la 
+ordenación por montículos tienen su comportamiento promedio (O(nlog⁡n)), mientras que la ordenación por inserción
+es menos eficiente (O(n2)).
+
+Los tiempos medidos para distintos tamaños de n confirman estas complejidades, destacando la consistencia de la 
+ordenación por montículos frente a diferentes configuraciones iniciales.
