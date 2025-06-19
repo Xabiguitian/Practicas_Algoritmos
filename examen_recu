@@ -1,0 +1,34 @@
+Ángela Garcia Sánchez: angela.gsanchez@udc.es
+
+Informe de la práctica del examen de recuperación del 19/6/25
+
+1.INTRODUCCIÓN
+
+
+ 2.UNIDADES DE MEDIDA
+  	Los tiempos se expresarán en microsegundos.
+
+ 3.CARÁCTERÍSTICAS DE LA MÁQUINA
+   Marca: HP
+   OS: Ubuntu 24.04.2 LTS
+   Kernel:  
+   CPU: AMD Ryzen 5 5 5625U with Radeon Graphics, 2301 Mhz 
+   Memoria Principal: 24,3 GiB
+
+
+ 4.MÉTODO
+
+
+
+5.MEDICIÓN DE LOS TIEMPOS DE EJECUCIÓN
+ Ahora, analizaremos esas técnicas de resolución con las dos funciones de dispersión
+ dadas en el enunciado.Finalmente analizaremos su complejidad computacional, 
+ calculando su cota constante, subestimada y sobrestimada; indicando sus
+ mediciones anómalas (#) y  los tiempos en los que se haga menos de 500 iteraciones (*).
+
+ 
+Cota subestimada:
+Cota constante:
+Cota sobrestimada:
+
+ 6.CONCLUSIÓN
